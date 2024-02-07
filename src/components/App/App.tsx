@@ -3,7 +3,7 @@ import './App.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
 
-import Header from '../Header/Header';
+import Header from '../header/Header';
 
 function App() {
   return (
