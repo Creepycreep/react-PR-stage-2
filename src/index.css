@@ -3,11 +3,21 @@ body {
   padding: 0;
 }
 
+a {
+  cursor: pointer;
+}
+
 .container {
   width: 100%;
-  max-width: 1240px;
-  padding: 0 20px;
+  max-width: 1360px;
+  padding: 0 40px;
   margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.container._header {
+  /* max-width: calc(1240px + 20px * 2); */
+  padding: 0 20px;
 }
 
 .ml-a {
@@ -36,4 +46,8 @@ body {
 
 .flex-justify-center {
   justify-content: center;
+}
+
+.gap-20 {
+  gap: calc(var(--offset-base-size) * 20);
 }
