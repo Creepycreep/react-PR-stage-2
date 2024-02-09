@@ -5,6 +5,7 @@ import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
 
 import Header from '../header/Header';
 import BurgerIngredients from '../burgerIngredients/BurgerIngredients';
+import BurgerConstructor from '../burgerConstructor/BurgerConstructor';
 
 import { data } from '../../utils/data'
 
@@ -39,9 +40,9 @@ function App() {
       <main>
         <div className="container">
           <h1 className='text text_type_main-default text_type_main-large pt-10 pb-5'>Соберите бургер</h1>
-          <div className='flex gap-20'>
+          <div className='flex gap-5 flex-justify-between'>
             <BurgerIngredients ingredients={ingredients} />
-
+            <BurgerConstructor />
           </div>
         </div>
       </main>

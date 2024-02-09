@@ -1,0 +1,22 @@
+.scrollbar {
+  overflow: hidden auto;
+  height: calc(100vh - 96px - 100px - 56px - 40px)
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: calc(var(--offset-base-size) * 8) calc(var(--offset-base-size) * 6);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.col {
+  max-width: 600px;
+}
