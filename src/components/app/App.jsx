@@ -6,7 +6,6 @@ import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
 import Header from '../header/Header';
 import BurgerIngredients from '../burgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../burgerConstructor/BurgerConstructor';
-import Modal from '../modal/Modal'
 
 // import { data } from '../../utils/data'
 import ingredientsService from '../../utils/api';
@@ -40,8 +39,6 @@ function App() {
           </div>
         </div>
       </main>
-
-      <Modal />
     </>
   );
 }
