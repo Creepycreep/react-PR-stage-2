@@ -12,15 +12,17 @@ const BurgerIngredients = ({ ingredients }) => {
 
   return (
     <div className="col flex flex-col gap-10">
-      <div className="flex">
+      <ul className="flex">
         {ingredients.map(item => {
           return (
-            <Tab key={item.category} value={item.category} active={current === item.category} onClick={setCurrent}>
-              {item.russianCategory}
-            </Tab>
+            <li key={item.category}>
+              <Tab value={item.category} active={current === item.category} onClick={setCurrent}>
+                {item.russianCategory}
+              </Tab>
+            </li>
           )
         })}
-      </div>
+      </ul>
 
       <div className={`${styles.scrollbar} custom-scroll  flex flex-col gap-10`}>
         {ingredients.map(item => {
@@ -30,10 +32,10 @@ const BurgerIngredients = ({ ingredients }) => {
                 {item.russianCategory}
               </h2>
 
-              <div className={`${styles.grid} pl-4 pr-4`}>
+              <ul className={`${styles.grid} pl-4 pr-4`}>
                 {item.items.map(elem => {
                   return (
-                    <div key={elem.name} className={`${styles.card} p-4`}>
+                    <li key={elem.name} className={`${styles.card} p-4`}>
                       <Counter count={1} size="default" extraClass="m-1" />
                       <img src={elem.image} alt="" />
                       <p className="text text_type_digits-default mt-1 mb-1 flex flex-align-center gap-2">
@@ -41,10 +43,10 @@ const BurgerIngredients = ({ ingredients }) => {
                         <CurrencyIcon type="primary" />
                       </p>
                       <div className="text text_type_main-small">{elem.name}</div>
-                    </div>
+                    </li>
                   )
                 })}
-              </div>
+              </ul>
             </section>
           )
         })}

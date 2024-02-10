@@ -13,49 +13,64 @@ const BurgerConstructor = () => {
         // thumbnail={img}
         />
 
-        <div className={styles.list + ' custom-scroll col gap-5 flex flex-col'}>
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-          // thumbnail={img}
-          />
-
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-          // thumbnail={img}
-          />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-          // thumbnail={img}
-          />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-          // thumbnail={img}
-          />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-          // thumbnail={img}
-          />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-          // thumbnail={img}
-          />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-          // thumbnail={img}
-          />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-          // thumbnail={img}
-          />
-        </div>
+        <ul className={styles.list + ' custom-scroll col gap-5 flex flex-col'}>
+          <li>
+            <ConstructorElement
+              text="Краторная булка N-200i (верх)"
+              price={50}
+            // thumbnail={img}
+            />
+          </li>
+          <li>
+            <ConstructorElement
+              text="Краторная булка N-200i (верх)"
+              price={50}
+            // thumbnail={img}
+            />
+          </li>
+          <li>
+            <ConstructorElement
+              text="Краторная булка N-200i (верх)"
+              price={50}
+            // thumbnail={img}
+            />
+          </li>
+          <li>
+            <ConstructorElement
+              text="Краторная булка N-200i (верх)"
+              price={50}
+            // thumbnail={img}
+            />
+          </li>
+          <li>
+            <ConstructorElement
+              text="Краторная булка N-200i (верх)"
+              price={50}
+            // thumbnail={img}
+            />
+          </li>
+          <li>
+            <ConstructorElement
+              text="Краторная булка N-200i (верх)"
+              price={50}
+            // thumbnail={img}
+            />
+          </li>
+          <li>
+            <ConstructorElement
+              text="Краторная булка N-200i (верх)"
+              price={50}
+            // thumbnail={img}
+            />
+          </li>
+          <li>
+            <ConstructorElement
+              text="Краторная булка N-200i (верх)"
+              price={50}
+            // thumbnail={img}
+            />
+          </li>
+        </ul>
 
         <ConstructorElement
           type="bottom"
