@@ -1,6 +1,6 @@
 .list {
   overflow: hidden auto;
-  height: calc(100vh - 96px - 100px - 160px - 40px - 20px - 40px - 64px);
+  height: calc(100vh - 96px - 100px - 160px - 40px - 64px - 40px - 64px);
 }
 
 .total {
