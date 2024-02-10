@@ -35,7 +35,7 @@ const BurgerIngredients = ({ ingredients }) => {
               <ul className={`${styles.grid} pl-4 pr-4`}>
                 {item.items.map(elem => {
                   return (
-                    <li key={elem.name} className={`${styles.card} p-4`}>
+                    <li key={elem.id} className={`${styles.card} p-4`}>
                       <Counter count={1} size="default" extraClass="m-1" />
                       <img src={elem.image} alt="" />
                       <p className="text text_type_digits-default mt-1 mb-1 flex flex-align-center gap-2">

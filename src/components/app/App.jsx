@@ -7,31 +7,24 @@ import Header from '../header/Header';
 import BurgerIngredients from '../burgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../burgerConstructor/BurgerConstructor';
 
-import { data } from '../../utils/data'
+// import { data } from '../../utils/data'
+import ingredientsService from '../../utils/api';
 
 function App() {
   const [ingredients, setIngredients] = useState([])
 
+  const getData = new ingredientsService()
+
   useEffect(() => {
-    const categories = [...new Set(data.map(item => item.type))]
-    const russianCategory = {
-      bun: 'Булки',
-      sauce: 'Соусы',
-      main: 'Начинки'
-    }
-
-    const filteredData = categories.map(element => {
-      const items = []
-      data.forEach(item => {
-        if (item.type === element) {
-          items.push(item)
+    getData.fetchIngredients()
+      .then(res => {
+        if (!res) {
+          throw new Error('Error!')
         }
+
+        setIngredients(res)
       })
-
-      return { category: element, russianCategory: russianCategory[element], items: items }
-    })
-
-    setIngredients(filteredData)
+      .catch(err => console.log(err))
   }, [])
 
   return (
