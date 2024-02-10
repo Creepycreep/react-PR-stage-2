@@ -1,6 +1,11 @@
-const ModalOverlay = () => {
+import styles from './ModalOverlay.module.css'
+
+const ModalOverlay = ({ onClick }) => {
   return (
-    <div></div>
+    <div
+      tabIndex={0}
+      className={styles.overlay}
+      onKeyDown={onClick}></div>
   )
 }
 
