@@ -2,28 +2,17 @@ import styles from './Modal.module.css'
 import ModalOverlay from '../modalOverlay/ModalOverlay';
 
 import { createPortal } from "react-dom"
-import { useEffect, useState } from 'react';
-
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
-const Modal = ({ children, isOverlay = true }) => {
-  const [visibility, setVisibility] = useState(true);
-
-  const onClose = (e) => {
-    console.log('object');
-    if (e.keyCode === 27) {
-      setVisibility(false)
-    }
-  }
-
+const Modal = ({ children, setVisibility, onKeyClose, title = '', isOverlay = true }) => {
   return (
     createPortal(
       <>
-        <div className={`${styles.modal} ${visibility ? styles.isVisible : ''} p-10`} >
+        <div className={`${styles.modal} p-10 pb-15`} >
           <div className={styles.modalHeader}>
-            <h2 className="text text_type_main-large">Детали ингредиента</h2>
+            {title.length ? <h2 className="text text_type_main-large">{title}</h2> : null}
 
-            <button onClick={() => setVisibility(false)}>
+            <button onClick={() => setVisibility(false)} aria-label="Close">
               <CloseIcon type="primary" />
             </button>
           </div>
@@ -33,7 +22,7 @@ const Modal = ({ children, isOverlay = true }) => {
           </div>
         </div>
 
-        {isOverlay && visibility ? <ModalOverlay onClick={onClose} /> : null}
+        {isOverlay ? <ModalOverlay onClick={setVisibility} onKeyClose={onKeyClose} onClose={() => setVisibility(false)} /> : null}
       </>
 
       , document.getElementById('modal'))

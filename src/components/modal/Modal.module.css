@@ -1,6 +1,4 @@
 .modal {
-  display: none;
-
   position: fixed;
   top: 50%;
   left: 50%;
@@ -9,11 +7,6 @@
 
   background-color: var(--background-alt);
   border-radius: var(--common-border-radius-s);
-}
-
-.modal.isVisible {
-  display: flex;
-  pointer-events: all;
 }
 
 .modal button {

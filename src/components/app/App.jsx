@@ -12,8 +12,14 @@ import ingredientsService from '../../utils/api';
 
 function App() {
   const [ingredients, setIngredients] = useState([])
+  const [detailIngredient, setDetailIngredient] = useState({})
 
-  const getData = new ingredientsService()
+  const getData = new ingredientsService();
+
+  const handleIngredient = (id, i) => {
+    const ingredient = ingredients[i].items.filter(elem => elem._id === id)[0]
+    setDetailIngredient(ingredient)
+  }
 
   useEffect(() => {
     getData.fetchIngredients()
@@ -34,7 +40,12 @@ function App() {
         <div className="container">
           <h1 className='text text_type_main-default text_type_main-large pt-10 pb-5'>Соберите бургер</h1>
           <div className='flex gap-5 flex-justify-between'>
-            <BurgerIngredients ingredients={ingredients} />
+            <BurgerIngredients
+              detailIngredient={detailIngredient}
+              handleIngredient={handleIngredient}
+              ingredients={ingredients}
+            />
+
             <BurgerConstructor />
           </div>
         </div>

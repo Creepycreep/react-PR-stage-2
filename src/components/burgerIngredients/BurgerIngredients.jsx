@@ -4,9 +4,22 @@ import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger
 import { useState, useEffect } from "react"
 
 import Modal from '../modal/Modal'
+import IngredientDetails from '../ingredientDetails/IngredientDetails'
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = ({ ingredients, detailIngredient, handleIngredient }) => {
   const [current, setCurrent] = useState(0)
+  const [modalVisibility, setModalVisibility] = useState(false);
+
+  const onKeyClose = (e) => {
+    if (e.keyCode === 27) {
+      setModalVisibility(false)
+    }
+  }
+
+  const onIngredientClick = (elem, i) => {
+    handleIngredient(elem, i)
+    setModalVisibility(true)
+  }
 
   useEffect(() => {
   }, [])
@@ -27,7 +40,7 @@ const BurgerIngredients = ({ ingredients }) => {
         </ul>
 
         <div className={`${styles.scrollbar} custom-scroll  flex flex-col gap-10`}>
-          {ingredients.map(item => {
+          {ingredients.map((item, i) => {
             return (
               <section key={item.category}>
                 <h2 className="text text_type_main-medium mb-6">
@@ -38,9 +51,12 @@ const BurgerIngredients = ({ ingredients }) => {
                   {item.items.map(elem => {
                     return (
                       <li key={elem._id}>
-                        <div className={`${styles.card} p-4`}>
+                        <div
+                          className={`${styles.card} p-4`}
+                          onClick={() => onIngredientClick(elem._id, i)}
+                        >
                           <Counter count={1} size="default" extraClass="m-1" />
-                          <img src={elem.image} alt="" />
+                          <img src={elem.image} alt={elem.name} />
                           <p className="text text_type_digits-default mt-1 mb-1 flex flex-align-center gap-2">
                             <span>{elem.price}</span>
                             <CurrencyIcon type="primary" />
@@ -57,7 +73,14 @@ const BurgerIngredients = ({ ingredients }) => {
         </div>
       </div>
 
-      <Modal />
+      {modalVisibility ?
+        <Modal title='Детали ингредиента'
+          onKeyClose={onKeyClose}
+          setVisibility={setModalVisibility}
+        >
+          <IngredientDetails ingredient={detailIngredient} />
+        </Modal>
+        : null}
     </>
 
   )

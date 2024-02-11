@@ -1,0 +1,13 @@
+.card h3 {
+  text-align: center;
+}
+
+.detail {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.img {
+  width: max-content;
+  margin: 0 auto;
+}
