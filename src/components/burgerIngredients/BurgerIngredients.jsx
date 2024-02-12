@@ -1,7 +1,7 @@
 import styles from './BurgerIngredients.module.css'
 
 import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 import Modal from '../modal/Modal'
 import IngredientDetails from '../ingredientDetails/IngredientDetails'
@@ -10,19 +10,10 @@ const BurgerIngredients = ({ ingredients, detailIngredient, handleIngredient }) 
   const [current, setCurrent] = useState(0)
   const [modalVisibility, setModalVisibility] = useState(false);
 
-  const onKeyClose = (e) => {
-    if (e.keyCode === 27) {
-      setModalVisibility(false)
-    }
-  }
-
   const onIngredientClick = (elem, i) => {
     handleIngredient(elem, i)
     setModalVisibility(true)
   }
-
-  useEffect(() => {
-  }, [])
 
   return (
     <>
@@ -75,7 +66,6 @@ const BurgerIngredients = ({ ingredients, detailIngredient, handleIngredient }) 
 
       {modalVisibility ?
         <Modal title='Детали ингредиента'
-          onKeyClose={onKeyClose}
           setVisibility={setModalVisibility}
         >
           <IngredientDetails ingredient={detailIngredient} />

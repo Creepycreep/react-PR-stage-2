@@ -4,7 +4,7 @@ import ModalOverlay from '../modalOverlay/ModalOverlay';
 import { createPortal } from "react-dom"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
-const Modal = ({ children, setVisibility, onKeyClose, title = '', isOverlay = true }) => {
+const Modal = ({ children, setVisibility, title = '', isOverlay = true }) => {
   return (
     createPortal(
       <>
@@ -22,7 +22,7 @@ const Modal = ({ children, setVisibility, onKeyClose, title = '', isOverlay = tr
           </div>
         </div>
 
-        {isOverlay ? <ModalOverlay onClick={setVisibility} onKeyClose={onKeyClose} onClose={() => setVisibility(false)} /> : null}
+        {isOverlay ? <ModalOverlay onClick={setVisibility} onClose={() => setVisibility(false)} /> : null}
       </>
 
       , document.getElementById('modal'))

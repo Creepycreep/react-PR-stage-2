@@ -7,6 +7,9 @@
 
   background-color: var(--background-alt);
   border-radius: var(--common-border-radius-s);
+
+  width: 720px;
+  box-sizing: border-box;
 }
 
 .modal button {

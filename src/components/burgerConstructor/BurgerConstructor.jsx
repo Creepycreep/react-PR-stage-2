@@ -1,7 +1,14 @@
 import styles from './BurgerConstructor.module.css'
+
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import { useState } from 'react';
+
+import Modal from '../modal/Modal'
+import OrderDetails from '../orderDetails/OrderDetails';
 
 const BurgerConstructor = () => {
+  const [modalVisibility, setModalVisibility] = useState(false);
+
   return (
     <div className=' col custom-scroll flex flex-col'>
       <section className={styles.col + ' gap-5 flex flex-col'}>
@@ -85,11 +92,18 @@ const BurgerConstructor = () => {
             <span className='mr-2'>1230</span>
             <CurrencyIcon type="primary" />
           </p>
-          <Button htmlType="button" type="primary" size="large">
+          <Button htmlType="button" type="primary" size="large" onClick={() => { setModalVisibility(true) }}>
             Оформить заказ
           </Button>
         </div>
       </section>
+
+      {modalVisibility ?
+        <Modal setVisibility={setModalVisibility}
+        >
+          {<OrderDetails />}
+        </Modal>
+        : null}
     </div>
   )
 }
