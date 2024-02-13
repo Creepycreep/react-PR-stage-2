@@ -5,10 +5,10 @@ import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-component
 
 const OrderDetails = () => {
   return (
-    <div className={styles.card + ' mt-15 mb-15'}>
+    <div className={styles.card}>
       <h3 className="text text_type_digits-large mb-8">034536</h3>
       <p className="text text_type_main-medium">идентификатор заказа</p>
-      <div className={styles.icon + ' mt-15 mb-15'}>
+      <div className={styles.icon + ' mt-10 mb-10'}>
         <img src={done} alt="" />
         <CheckMarkIcon type="primary" />
       </div>

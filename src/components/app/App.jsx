@@ -3,10 +3,11 @@ import './App.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
 
+import { BurgerIngredientsContext } from '../../context/BurgerIngredientsContext'
+
 import Header from '../header/Header';
 import BurgerIngredients from '../burgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../burgerConstructor/BurgerConstructor';
-
 // import { data } from '../../utils/data'
 import ingredientsService from '../../utils/api';
 
@@ -34,7 +35,7 @@ function App() {
   }, [])
 
   return (
-    <>
+    <BurgerIngredientsContext.Provider value={ingredients}>
       <Header />
       <main>
         <div className="container">
@@ -43,14 +44,13 @@ function App() {
             <BurgerIngredients
               detailIngredient={detailIngredient}
               handleIngredient={handleIngredient}
-              ingredients={ingredients}
             />
 
             <BurgerConstructor />
           </div>
         </div>
       </main>
-    </>
+    </BurgerIngredientsContext.Provider>
   );
 }
 

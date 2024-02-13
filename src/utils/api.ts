@@ -1,3 +1,5 @@
+import { ingredient } from "../components/types/Types"
+
 class ingredientsService {
   _apiBase = 'https://norma.nomoreparties.space/api/ingredients';
 
@@ -14,16 +16,16 @@ class ingredientsService {
     return await this.transformIngredients(data.data)
   }
 
-  transformIngredients = (data) => {
-    const categories = [...new Set(data.map(item => item.type))]
-    const russianCategory = {
+  transformIngredients = (data: Array<ingredient>) => {
+    const categories = Array.from(new Set(data.map(item => item.type)))
+    const russianCategory: { [index: string]: string; } = {
       bun: 'Булки',
       sauce: 'Соусы',
       main: 'Начинки'
     }
 
     const filteredData = categories.map(element => {
-      const items = []
+      const items: Array<ingredient> = []
       data.forEach(item => {
         if (item.type === element) {
           items.push(item)
