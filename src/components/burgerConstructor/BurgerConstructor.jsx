@@ -1,13 +1,16 @@
 import styles from './BurgerConstructor.module.css'
 
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+
+import { BurgerOrderContext } from '../../context/BurgerOrderContext'
 
 import Modal from '../modal/Modal'
 import OrderDetails from '../orderDetails/OrderDetails';
 
 const BurgerConstructor = () => {
   const [modalVisibility, setModalVisibility] = useState(false);
+  const ingredients = useContext(BurgerOrderContext)
 
   return (
     <div className=' col custom-scroll flex flex-col'>

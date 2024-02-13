@@ -2,16 +2,16 @@ import styles from './BurgerIngredients.module.css'
 
 import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useState, useContext } from "react"
-import { BurgerIngredientsContext } from '../../context/BurgerIngredientsContext'
+import { BurgerOrderContext } from '../../context/BurgerOrderContext'
 
 import Modal from '../modal/Modal'
 import IngredientDetails from '../ingredientDetails/IngredientDetails'
 
-const BurgerIngredients = ({ detailIngredient, handleIngredient }) => {
+const BurgerIngredients = ({ ingredients, detailIngredient, handleIngredient }) => {
   const [current, setCurrent] = useState(0)
   const [modalVisibility, setModalVisibility] = useState(false);
 
-  const ingredients = useContext(BurgerIngredientsContext)
+  const order = useContext(BurgerOrderContext)
 
   const onIngredientClick = (elem, i) => {
     handleIngredient(elem, i)

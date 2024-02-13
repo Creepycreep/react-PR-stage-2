@@ -3,7 +3,7 @@ import './App.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
 
-import { BurgerIngredientsContext } from '../../context/BurgerIngredientsContext'
+import { BurgerOrderContext } from '../../context/BurgerOrderContext'
 
 import Header from '../header/Header';
 import BurgerIngredients from '../burgerIngredients/BurgerIngredients';
@@ -35,13 +35,14 @@ function App() {
   }, [])
 
   return (
-    <BurgerIngredientsContext.Provider value={ingredients}>
+    <BurgerOrderContext.Provider value={[]}>
       <Header />
       <main>
         <div className="container">
           <h1 className='text text_type_main-default text_type_main-large pt-10 pb-5'>Соберите бургер</h1>
           <div className='flex gap-5 flex-justify-between'>
             <BurgerIngredients
+              ingredients={ingredients}
               detailIngredient={detailIngredient}
               handleIngredient={handleIngredient}
             />
@@ -50,7 +51,7 @@ function App() {
           </div>
         </div>
       </main>
-    </BurgerIngredientsContext.Provider>
+    </BurgerOrderContext.Provider>
   );
 }
 
