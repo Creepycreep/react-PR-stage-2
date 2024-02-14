@@ -1,21 +1,19 @@
 import styles from './BurgerIngredients.module.css'
 
 import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useState, useContext } from "react"
-import { BurgerOrderContext } from '../../context/BurgerOrderContext'
+import { useState } from "react"
 
 import Modal from '../modal/Modal'
 import IngredientDetails from '../ingredientDetails/IngredientDetails'
 
-const BurgerIngredients = ({ ingredients, detailIngredient, handleIngredient }) => {
+const BurgerIngredients = ({ ingredients, detailIngredient, handleIngredient, onChoose }) => {
   const [current, setCurrent] = useState(0)
   const [modalVisibility, setModalVisibility] = useState(false);
 
-  const order = useContext(BurgerOrderContext)
-
-  const onIngredientClick = (elem, i) => {
-    handleIngredient(elem, i)
+  const onIngredientClick = (elem) => {
+    handleIngredient(elem)
     setModalVisibility(true)
+    onChoose(elem)
   }
 
   return (
@@ -34,7 +32,7 @@ const BurgerIngredients = ({ ingredients, detailIngredient, handleIngredient }) 
         </ul>
 
         <div className={`${styles.scrollbar} custom-scroll  flex flex-col gap-10`}>
-          {ingredients.map((item, i) => {
+          {ingredients.map((item) => {
             return (
               <section key={item.category}>
                 <h2 className="text text_type_main-medium mb-6">
@@ -47,7 +45,7 @@ const BurgerIngredients = ({ ingredients, detailIngredient, handleIngredient }) 
                       <li key={elem._id}>
                         <div
                           className={`${styles.card} p-4`}
-                          onClick={() => onIngredientClick(elem._id, i)}
+                          onClick={() => onIngredientClick(elem)}
                         >
                           <Counter count={1} size="default" extraClass="m-1" />
                           <img src={elem.image} alt={elem.name} />

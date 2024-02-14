@@ -1,7 +1,7 @@
 import styles from './BurgerConstructor.module.css'
 
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useState, useContext } from 'react';
+import { useState, useContext, useMemo } from 'react';
 
 import { BurgerOrderContext } from '../../context/BurgerOrderContext'
 
@@ -15,90 +15,53 @@ const BurgerConstructor = () => {
   return (
     <div className=' col custom-scroll flex flex-col'>
       <section className={styles.col + ' gap-5 flex flex-col'}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          price={200}
-        // thumbnail={img}
-        />
+        {ingredients.bun ?
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${ingredients.bun.name} (верх)`}
+            price={ingredients.bun.price}
+            thumbnail={ingredients.bun.image}
+          />
+          : null}
 
-        <ul className={styles.list + ' custom-scroll col gap-5 flex flex-col'}>
-          <li>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-            // thumbnail={img}
-            />
-          </li>
-          <li>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-            // thumbnail={img}
-            />
-          </li>
-          <li>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-            // thumbnail={img}
-            />
-          </li>
-          <li>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-            // thumbnail={img}
-            />
-          </li>
-          <li>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-            // thumbnail={img}
-            />
-          </li>
-          <li>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-            // thumbnail={img}
-            />
-          </li>
-          <li>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-            // thumbnail={img}
-            />
-          </li>
-          <li>
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-            // thumbnail={img}
-            />
-          </li>
-        </ul>
+        {ingredients.ingredients.length ?
+          <ul className={styles.list + ' custom-scroll col gap-5 flex flex-col'}>
+            {ingredients.ingredients.map((element, i) => {
+              return (
+                <li key={element._id + i}>
+                  <ConstructorElement
+                    text={element.name}
+                    price={element.price}
+                    thumbnail={element.image}
+                  />
+                </li>
+              )
+            })}
+          </ul>
+          : null}
 
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text="Краторная булка N-200i (низ)"
-          price={200}
-        // thumbnail={img}
-        />
+        {ingredients.bun ?
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${ingredients.bun.name} (низ)`}
+            price={ingredients.bun.price}
+            thumbnail={ingredients.bun.image}
+          />
+          : null}
 
-        <div className={styles.total + ' flex flex-align-center pt-5 gap-10'}>
-          <p className="text text_type_digits-medium">
-            <span className='mr-2'>1230</span>
-            <CurrencyIcon type="primary" />
-          </p>
-          <Button htmlType="button" type="primary" size="large" onClick={() => { setModalVisibility(true) }}>
-            Оформить заказ
-          </Button>
-        </div>
+        {ingredients.bun ?
+          <div className={styles.total + ' flex flex-align-center pt-5 gap-10'}>
+            <p className="text text_type_digits-medium">
+              <span className='mr-2'>1230</span>
+              <CurrencyIcon type="primary" />
+            </p>
+            <Button htmlType="button" type="primary" size="large" onClick={() => { setModalVisibility(true) }}>
+              Оформить заказ
+            </Button>
+          </div>
+          : null}
       </section>
 
       {modalVisibility ?

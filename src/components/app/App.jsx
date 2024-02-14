@@ -14,12 +14,20 @@ import ingredientsService from '../../utils/api';
 function App() {
   const [ingredients, setIngredients] = useState([])
   const [detailIngredient, setDetailIngredient] = useState({})
+  const [order, setOrder] = useState({ bun: null, ingredients: [] })
 
   const getData = new ingredientsService();
 
-  const handleIngredient = (id, i) => {
-    const ingredient = ingredients[i].items.filter(elem => elem._id === id)[0]
-    setDetailIngredient(ingredient)
+  const handleIngredient = (elem) => {
+    setDetailIngredient(elem)
+  }
+
+  const addIngredient = (elem) => {
+    if (elem.type === 'bun') {
+      setOrder({ ...order, bun: elem })
+    } else {
+      setOrder({ ...order, ingredients: [...order.ingredients, elem] })
+    }
   }
 
   useEffect(() => {
@@ -29,13 +37,13 @@ function App() {
           throw new Error('Error!')
         }
 
-        setIngredients(res)
+        setIngredients(res);
       })
       .catch(err => console.log(err))
   }, [])
 
   return (
-    <BurgerOrderContext.Provider value={[]}>
+    <BurgerOrderContext.Provider value={order}>
       <Header />
       <main>
         <div className="container">
@@ -45,6 +53,7 @@ function App() {
               ingredients={ingredients}
               detailIngredient={detailIngredient}
               handleIngredient={handleIngredient}
+              onChoose={addIngredient}
             />
 
             <BurgerConstructor />
