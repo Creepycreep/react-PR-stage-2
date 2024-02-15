@@ -65,7 +65,7 @@ function App() {
   }
 
   useEffect(() => {
-    getData.fetchIngredients()
+    getData.getIngredients()
       .then(res => {
         if (!res) {
           throw new Error('Error!')

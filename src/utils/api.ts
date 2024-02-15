@@ -2,18 +2,29 @@ import { ingredient } from "../components/types/Types"
 
 class ingredientsService {
   _apiBase = 'https://norma.nomoreparties.space/api/ingredients';
+  _apiPost = 'https://norma.nomoreparties.space/api/orders';
 
-  fetchIngredients = async () => {
-    const data = await fetch(this._apiBase)
+  fetchData = async (url: string, options: any = {}) => {
+    const data = await fetch(url, options)
       .then(res => {
         if (!res) {
           throw new Error('Error!')
         }
+
         return res.json()
       })
-      .catch(err => console.log(err))
 
-    return await this.transformIngredients(data.data)
+    return await data.data
+  }
+
+  postOrder = async () => {
+    const result = await this.fetchData(this._apiPost)
+    return await this.transformIngredients(result)
+  }
+
+  getIngredients = async () => {
+    const result = await this.fetchData(this._apiBase)
+    return await this.transformIngredients(result)
   }
 
   transformIngredients = (data: Array<ingredient>) => {
