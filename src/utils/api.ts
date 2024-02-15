@@ -1,4 +1,4 @@
-import { ingredient } from "../components/types/Types"
+import { ingredient } from './../components/types/Types';
 
 class ingredientsService {
   _apiBase = 'https://norma.nomoreparties.space/api/ingredients';
@@ -17,8 +17,11 @@ class ingredientsService {
     return await data.data
   }
 
-  postOrder = async () => {
-    const result = await this.fetchData(this._apiPost)
+
+  postOrder = async (ingredient: string) => {
+    const result = await this.fetchData(this._apiPost, {
+      method: 'POST', body: ingredient
+    })
     return await this.transformIngredients(result)
   }
 
