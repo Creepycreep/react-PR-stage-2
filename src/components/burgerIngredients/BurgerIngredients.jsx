@@ -1,14 +1,10 @@
 import styles from './BurgerIngredients.module.css'
 
 import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useState } from "react"
+import { useState, memo } from "react"
 
-import Modal from '../modal/Modal'
-import IngredientDetails from '../ingredientDetails/IngredientDetails'
-
-const BurgerIngredients = ({ ingredients, detailIngredient, handleIngredient, onChoose }) => {
+const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModalVisibility, handleIngredient, onChoose }) {
   const [current, setCurrent] = useState(0)
-  const [modalVisibility, setModalVisibility] = useState(false);
 
   const onIngredientClick = (elem) => {
     handleIngredient(elem)
@@ -64,16 +60,8 @@ const BurgerIngredients = ({ ingredients, detailIngredient, handleIngredient, on
           })}
         </div>
       </div>
-
-      {modalVisibility ?
-        <Modal title='Детали ингредиента'
-          setVisibility={setModalVisibility}
-        >
-          <IngredientDetails ingredient={detailIngredient} />
-        </Modal>
-        : null}
     </>
   )
-}
+})
 
 export default BurgerIngredients

@@ -1,15 +1,11 @@
 import styles from './BurgerConstructor.module.css'
 
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useState, useContext, useMemo } from 'react';
+import { useState, useContext } from 'react';
 
 import { BurgerOrderContext } from '../../context/BurgerOrderContext'
 
-import Modal from '../modal/Modal'
-import OrderDetails from '../orderDetails/OrderDetails';
-
-const BurgerConstructor = () => {
-  const [modalVisibility, setModalVisibility] = useState(false);
+const BurgerConstructor = ({ setModalVisibility, removeIngredient, orderPrice }) => {
   const ingredients = useContext(BurgerOrderContext)
 
   return (
@@ -34,6 +30,7 @@ const BurgerConstructor = () => {
                     text={element.name}
                     price={element.price}
                     thumbnail={element.image}
+                    handleClose={() => removeIngredient(element, i)}
                   />
                 </li>
               )
@@ -54,7 +51,9 @@ const BurgerConstructor = () => {
         {ingredients.bun ?
           <div className={styles.total + ' flex flex-align-center pt-5 gap-10'}>
             <p className="text text_type_digits-medium">
-              <span className='mr-2'>1230</span>
+              <span className='mr-2'>
+                {orderPrice.price}
+              </span>
               <CurrencyIcon type="primary" />
             </p>
             <Button htmlType="button" type="primary" size="large" onClick={() => { setModalVisibility(true) }}>
@@ -63,13 +62,6 @@ const BurgerConstructor = () => {
           </div>
           : null}
       </section>
-
-      {modalVisibility ?
-        <Modal setVisibility={setModalVisibility}
-        >
-          {<OrderDetails />}
-        </Modal>
-        : null}
     </div>
   )
 }
