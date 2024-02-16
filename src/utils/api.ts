@@ -17,10 +17,12 @@ class ingredientsService {
     return await data.data
   }
 
-
-  postOrder = async (ingredient: string) => {
+  postOrder = async (ingredient: Array<string>) => {
+    console.log(JSON.stringify(ingredient));
     const result = await this.fetchData(this._apiPost, {
-      method: 'POST', body: ingredient
+      method: 'POST', headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }, body: JSON.stringify(ingredient)
     })
     return await this.transformIngredients(result)
   }

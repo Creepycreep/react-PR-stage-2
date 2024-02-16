@@ -56,6 +56,8 @@ function App() {
     }
 
     dispatch({ type: 'PRICE_INC', payload: elem.price })
+    getData.postOrder({ ingredients: ["609646e4dc916e00276b286e", "609646e4dc916e00276b2870"] }).then(res => console.log(res))
+
   }, [order])
 
   const removeIngredient = (elem, i) => {
