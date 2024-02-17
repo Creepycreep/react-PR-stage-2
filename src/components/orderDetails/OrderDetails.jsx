@@ -3,10 +3,10 @@ import done from '../../images/done.png'
 
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
-const OrderDetails = () => {
+const OrderDetails = ({ num }) => {
   return (
     <div className={styles.card}>
-      <h3 className="text text_type_digits-large mb-8">034536</h3>
+      <h3 className="text text_type_digits-large mb-8">{num}</h3>
       <p className="text text_type_main-medium">идентификатор заказа</p>
       <div className={styles.icon + ' mt-10 mb-10'}>
         <img src={done} alt="" />

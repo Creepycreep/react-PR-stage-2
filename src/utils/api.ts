@@ -4,32 +4,30 @@ class ingredientsService {
   _apiBase = 'https://norma.nomoreparties.space/api/ingredients';
   _apiPost = 'https://norma.nomoreparties.space/api/orders';
 
-  fetchData = async (url: string, options: any = {}) => {
-    const data = await fetch(url, options)
-      .then(res => {
-        if (!res) {
-          throw new Error('Error!')
-        }
-
-        return res.json()
-      })
-
-    return await data.data
-  }
-
   postOrder = async (ingredient: Array<string>) => {
-    console.log(JSON.stringify(ingredient));
-    const result = await this.fetchData(this._apiPost, {
+    const result = await fetch(this._apiPost, {
       method: 'POST', headers: {
         'Content-Type': 'application/json;charset=utf-8'
-      }, body: JSON.stringify(ingredient)
-    })
-    return await this.transformIngredients(result)
+      }, body: JSON.stringify({ ingredients: ingredient })
+    }).then(res => {
+      if (!res || !res.ok) {
+        throw new Error('Error!')
+      }
+      return res.json()
+    }).catch(console.error);
+
+    return result
   }
 
   getIngredients = async () => {
-    const result = await this.fetchData(this._apiBase)
-    return await this.transformIngredients(result)
+    const result = await fetch(this._apiBase).then(res => {
+      if (!res || !res.ok) {
+        throw new Error('Error!')
+      }
+      return res.json()
+    }).catch(console.error);
+
+    return this.transformIngredients(result.data)
   }
 
   transformIngredients = (data: Array<ingredient>) => {

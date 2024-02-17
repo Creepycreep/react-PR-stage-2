@@ -9,16 +9,6 @@
   gap: calc(var(--offset-base-size) * 8) calc(var(--offset-base-size) * 6);
 }
 
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-
-  cursor: pointer;
-}
-
 .col {
   max-width: 600px;
 }

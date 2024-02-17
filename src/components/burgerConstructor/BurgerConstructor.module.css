@@ -1,6 +1,6 @@
 .list {
   overflow: hidden auto;
-  max-height: calc(100vh - 96px - 100px - 160px - 40px - 64px - 40px - 64px);
+  max-height: calc(100vh - 96px - 100px - 160px - 40px - 40px - 64px);
 }
 
 .total {
@@ -9,4 +9,22 @@
 
 .col {
   align-items: end;
+  min-height: 80px;
+  position: relative;
+
+}
+
+.col::after {
+  position: absolute;
+  content: '';
+  border: 2px solid transparent;
+  inset: -20px;
+  border-radius: 20px;
+
+  transition: all .3s;
+  pointer-events: none;
+}
+
+.can-drop::after {
+  border-color: #4C4CFF;
 }

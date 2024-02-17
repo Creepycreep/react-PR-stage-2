@@ -1,22 +1,22 @@
 import styles from './BurgerIngredients.module.css'
+import { useState, memo, useEffect } from "react"
 
-import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useState, memo } from "react"
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
+import Ingredient from '../inrgredient/Ingredient'
 
 const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModalVisibility, handleIngredient, onChoose }) {
-  const [current, setCurrent] = useState(0)
+  const [current, setCurrent] = useState('bun');
 
   const onIngredientClick = (elem) => {
     handleIngredient(elem)
     setModalVisibility(true)
-    onChoose(elem)
   }
 
   return (
     <>
       <div className="col flex flex-col gap-10">
         <ul className="flex">
-          {ingredients.map(item => {
+          {ingredients.map((item) => {
             return (
               <li key={item.russianCategory}>
                 <Tab value={item.category} active={current === item.category} onClick={setCurrent}>
@@ -28,9 +28,9 @@ const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModa
         </ul>
 
         <div className={`${styles.scrollbar} custom-scroll  flex flex-col gap-10`}>
-          {ingredients.map((item) => {
+          {ingredients.map((item, i) => {
             return (
-              <section key={item.category}>
+              <section key={item.category} >
                 <h2 className="text text_type_main-medium mb-6">
                   {item.russianCategory}
                 </h2>
@@ -39,18 +39,11 @@ const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModa
                   {item.items.map(elem => {
                     return (
                       <li key={elem._id}>
-                        <div
-                          className={`${styles.card} p-4`}
-                          onClick={() => onIngredientClick(elem)}
-                        >
-                          <Counter count={1} size="default" extraClass="m-1" />
-                          <img src={elem.image} alt={elem.name} />
-                          <p className="text text_type_digits-default mt-1 mb-1 flex flex-align-center gap-2">
-                            <span>{elem.price}</span>
-                            <CurrencyIcon type="primary" />
-                          </p>
-                          <div className="text text_type_main-small">{elem.name}</div>
-                        </div>
+                        <Ingredient
+                          elem={elem}
+                          onIngredientClick={onIngredientClick}
+                          onChoose={onChoose}
+                        />
                       </li>
                     )
                   })}
