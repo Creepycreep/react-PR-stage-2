@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/Creepycreep/react-PR-stage-2/static/css/main.68b7f8fc.css",
+    "main.js": "/Creepycreep/react-PR-stage-2/static/js/main.46a4cdc9.js",
+    "static/media/JetBrainsMono-Bold.woff": "/Creepycreep/react-PR-stage-2/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
+    "static/media/JetBrainsMono-Regular.woff": "/Creepycreep/react-PR-stage-2/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
+    "static/media/JetBrainsMono-Bold.woff2": "/Creepycreep/react-PR-stage-2/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
+    "static/media/JetBrainsMono-Regular.woff2": "/Creepycreep/react-PR-stage-2/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
+    "static/media/iceland.woff": "/Creepycreep/react-PR-stage-2/static/media/iceland.77ad7fc2baffd9305538.woff",
+    "static/media/iceland.woff2": "/Creepycreep/react-PR-stage-2/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
+    "static/media/done.png": "/Creepycreep/react-PR-stage-2/static/media/done.99d562cbb6a67d1c5070.png",
+    "index.html": "/Creepycreep/react-PR-stage-2/index.html",
+    "main.68b7f8fc.css.map": "/Creepycreep/react-PR-stage-2/static/css/main.68b7f8fc.css.map",
+    "main.46a4cdc9.js.map": "/Creepycreep/react-PR-stage-2/static/js/main.46a4cdc9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.68b7f8fc.css",
+    "static/js/main.46a4cdc9.js"
+  ]
+}
