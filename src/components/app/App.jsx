@@ -10,6 +10,11 @@ import Header from '../header/Header';
 
 import MainPage from '../../pages/Main';
 import ErrorPage from '../../pages/404';
+import Profile from '../../pages/Profile';
+import ResetPassword from '../../pages/ResetPassword';
+import ForgotPassword from '../../pages/ForgotPassword';
+import Register from '../../pages/Register';
+import Login from '../../pages/Login';
 
 import ingredientsService from '../../utils/api';
 
@@ -81,7 +86,7 @@ function App() {
         <main>
           <div className="container">
             <Routes>
-              <Route path="/"
+              <Route path="/Creepycreep/react-PR-stage-2"
                 element={
                   <MainPage
                     addIngredient={addIngredient}
@@ -89,6 +94,12 @@ function App() {
                     makeOrder={makeOrder}
                   />
                 } />
+
+              <Route path='/Creepycreep/react-PR-stage-2/profile' element={<Profile />} />
+              <Route path='/Creepycreep/react-PR-stage-2/reset-password' element={<ResetPassword />} />
+              <Route path='/Creepycreep/react-PR-stage-2/forgot-password' element={<ForgotPassword />} />
+              <Route path='/Creepycreep/react-PR-stage-2/register' element={<Register />} />
+              <Route path='/Creepycreep/react-PR-stage-2/login' element={<Login />} />
 
               <Route path='*' element={<ErrorPage />} />
             </Routes>

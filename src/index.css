@@ -99,3 +99,12 @@ ul {
   max-width: 600px;
   flex-grow: 1;
 }
+
+.error-page {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--offset-base-size) * 8);
+  height: calc(100vh - 96px);
+  justify-content: center;
+  align-items: center;
+}

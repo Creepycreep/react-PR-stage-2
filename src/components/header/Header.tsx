@@ -10,11 +10,6 @@ const Header = () => {
           <span className='text pl-2 text_type_main-default'>Конструктор</span>
         </a>
 
-        <a className='flex flex-align-center mr-a p-5'>
-          <ListIcon type="secondary" />
-          <span className='text pl-2 text_type_main-default text_color_inactive'>Лента заказов</span>
-        </a>
-
         <a className='flex flex-align-center ml-a p-5'>
           <ProfileIcon type="secondary" />
           <span className='pl-2 text text_type_main-default text_color_inactive'>Личный кабинет</span>
