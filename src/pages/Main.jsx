@@ -11,11 +11,14 @@ import OrderDetails from '../components/orderDetails/OrderDetails';
 import Modal from '../components/modal/Modal'
 
 import { BurgerOrderContext } from '../context/BurgerOrderContext'
+import ingredientsService from '../utils/api';
 
-const MainPage = ({ ingredients, addIngredient, removeIngredient, makeOrder }) => {
+const MainPage = ({ addIngredient, removeIngredient, makeOrder }) => {
   const order = useContext(BurgerOrderContext)
+  const getData = new ingredientsService();
 
   const [detailIngredient, setDetailIngredient] = useState({})
+  const [ingredients, setIngredients] = useState([])
 
   const handleIngredient = useCallback(
     (elem) => {
@@ -26,6 +29,14 @@ const MainPage = ({ ingredients, addIngredient, removeIngredient, makeOrder }) =
   const [isModalOrderVisible, setIsModalOrderVisible] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const data = await getData.getIngredients();
+      setIngredients(data);
+    }
+    fetchData();
+  }, [])
+
+  useEffect(() => {
     if (order.orderNum) {
       setIsModalOrderVisible(true)
     }
@@ -33,6 +44,8 @@ const MainPage = ({ ingredients, addIngredient, removeIngredient, makeOrder }) =
 
   return (
     <>
+      <h1 className='text text_type_main-default text_type_main-large pt-10 pb-5'>Соберите бургер</h1>
+
       <DndProvider backend={HTML5Backend}>
         <div className='flex gap-5 flex-justify-between'>
           <BurgerIngredients

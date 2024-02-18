@@ -2,14 +2,17 @@ import './App.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
 
-import { useEffect, useState, useCallback, useReducer } from 'react';
+import { useState, useCallback, useReducer } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { BurgerOrderContext } from '../../context/BurgerOrderContext'
 import Header from '../header/Header';
-import ingredientsService from '../../utils/api';
 
 import MainPage from '../../pages/Main';
+import ErrorPage from '../../pages/404';
+
+import ingredientsService from '../../utils/api';
+
 function reducer(state, action) {
   switch (action.type) {
     case 'ADD': {
@@ -46,10 +49,9 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [ingredients, setIngredients] = useState([])
-  const [order, dispatch] = useReducer(reducer, { bun: null, ingredients: [], price: 0 });
-
   const getData = new ingredientsService();
+
+  const [order, dispatch] = useReducer(reducer, { bun: null, ingredients: [], price: 0 });
 
   const addIngredient = useCallback((elem) => {
     if (elem.type === 'bun') {
@@ -64,6 +66,7 @@ function App() {
     const filteredIngredients = order.ingredients.filter((elem, index) => index !== i);
     dispatch({ type: 'REMOVE', removedIng: elem, ingredients: filteredIngredients })
   }
+
   const makeOrder = async () => {
     const data = [...order.ingredients.map(elem => elem._id), order.bun._id]
     getData.postOrder(data).then(res => {
@@ -71,32 +74,23 @@ function App() {
     }).catch(console.error);
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getData.getIngredients();
-      setIngredients(data);
-    }
-    fetchData();
-  }, [])
-
   return (
     <Router>
       <BurgerOrderContext.Provider value={order}>
         <Header />
         <main>
           <div className="container">
-            <h1 className='text text_type_main-default text_type_main-large pt-10 pb-5'>Соберите бургер</h1>
-
             <Routes>
-              <Route path="/Creepycreep/react-PR-stage-2"
+              <Route path="/"
                 element={
                   <MainPage
-                    ingredients={ingredients}
                     addIngredient={addIngredient}
                     removeIngredient={removeIngredient}
                     makeOrder={makeOrder}
                   />
                 } />
+
+              <Route path='*' element={<ErrorPage />} />
             </Routes>
           </div>
         </main>
