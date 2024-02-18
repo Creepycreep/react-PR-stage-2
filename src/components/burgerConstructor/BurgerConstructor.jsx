@@ -2,7 +2,7 @@ import styles from './BurgerConstructor.module.css'
 
 import { useDrop } from 'react-dnd'
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 
 import { BurgerOrderContext } from '../../context/BurgerOrderContext'
 
