@@ -17,6 +17,8 @@ main {
 
 a {
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
 ul {
@@ -24,6 +26,10 @@ ul {
 
   margin: 0;
   padding: 0;
+}
+
+.link {
+  color: #4C4CFF;
 }
 
 .container {
@@ -100,10 +106,10 @@ ul {
   flex-grow: 1;
 }
 
-.error-page {
+.center-page {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--offset-base-size) * 8);
+  gap: calc(var(--offset-base-size) * 6);
   height: calc(100vh - 96px);
   justify-content: center;
   align-items: center;
