@@ -1,11 +1,9 @@
 import { ingredient } from './../components/types/Types';
-
+import { API } from './apiConsts';
 class ingredientsService {
-  _apiBase = 'https://norma.nomoreparties.space/api/ingredients';
-  _apiPost = 'https://norma.nomoreparties.space/api/orders';
 
   postOrder = async (ingredient: Array<string>) => {
-    const result = await fetch(this._apiPost, {
+    const result = await fetch(API._orders, {
       method: 'POST', headers: {
         'Content-Type': 'application/json;charset=utf-8'
       }, body: JSON.stringify({ ingredients: ingredient })
@@ -20,7 +18,7 @@ class ingredientsService {
   }
 
   getIngredients = async () => {
-    const result = await fetch(this._apiBase).then(res => {
+    const result = await fetch(API._ingredients).then(res => {
       if (!res || !res.ok) {
         throw new Error('Error!')
       }
