@@ -26,5 +26,5 @@
 }
 
 .can-drop::after {
-  border-color: #4C4CFF;
+  border-color: var(--colors-interface-accent);
 }

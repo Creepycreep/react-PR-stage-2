@@ -9,7 +9,7 @@ const Register = () => {
       <FormRegister />
       <div className="row flex">
         <p className='text text_type_main-default text_color_inactive mr-2'>Уже зарегистрированы?</p>
-        <Link to='/Creepycreep/react-PR-stage-2/login' className=' link text text_type_main-default'>Войти</Link>
+        <Link to='/react-PR-stage-2/login' className=' link text text_type_main-default'>Войти</Link>
       </div>
     </div>
   )
