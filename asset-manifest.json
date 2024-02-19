@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-PR-stage-2/static/css/main.9b90b2fe.css",
-    "main.js": "/react-PR-stage-2/static/js/main.dc46e4b7.js",
+    "main.js": "/react-PR-stage-2/static/js/main.cf31b051.js",
     "static/media/JetBrainsMono-Bold.woff": "/react-PR-stage-2/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
     "static/media/JetBrainsMono-Regular.woff": "/react-PR-stage-2/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
     "static/media/JetBrainsMono-Bold.woff2": "/react-PR-stage-2/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
@@ -11,10 +11,10 @@
     "static/media/done.png": "/react-PR-stage-2/static/media/done.99d562cbb6a67d1c5070.png",
     "index.html": "/react-PR-stage-2/index.html",
     "main.9b90b2fe.css.map": "/react-PR-stage-2/static/css/main.9b90b2fe.css.map",
-    "main.dc46e4b7.js.map": "/react-PR-stage-2/static/js/main.dc46e4b7.js.map"
+    "main.cf31b051.js.map": "/react-PR-stage-2/static/js/main.cf31b051.js.map"
   },
   "entrypoints": [
     "static/css/main.9b90b2fe.css",
-    "static/js/main.dc46e4b7.js"
+    "static/js/main.cf31b051.js"
   ]
 }
