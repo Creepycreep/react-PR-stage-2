@@ -10,11 +10,6 @@ const Login = () => {
         <p className='text text_type_main-default text_color_inactive mr-2'>Вы — новый пользователь? </p>
         <Link to='/react-PR-stage-2/register' className='link text text_type_main-default'>Зарегистрироваться</Link>
       </div>
-
-      <div className="row flex">
-        <p className='text text_type_main-default text_color_inactive mr-2'>Забыли пароль? </p>
-        <Link to='/react-PR-stage-2/forgot-password' className=' link text text_type_main-default'>Восстановить пароль</Link>
-      </div>
     </div>
   )
 }
