@@ -1,43 +1,25 @@
 import styles from './FormRegister.module.css'
-import { API } from '../../utils/apiConsts'
 
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState, useEffect } from 'react'
+import { userService } from '../../service/userService'
+import { useForm } from '../../hooks/useForm'
 
-const FormRegister = () => {
-  const [value, setValue] = useState({ email: '', password: '', name: '' })
-  const [isFullfilled, setisFullfilled] = useState(false)
-
-  const onChange = e => {
-    setValue({ ...value, [e.target.name]: e.target.value })
-  }
+const FormRegister = ({ setUser }) => {
+  const [value, setValue, isFilled] = useForm({ name: '', email: '', password: '' })
+  const registration = new userService()
 
   const onSubmit = async e => {
     e.preventDefault();
-    const result = await fetch(API._register, {
-      method: 'POST', headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      }, body: JSON.stringify(value)
-    })
-
-    console.log(value);
+    const user = await registration.userRegister(value)
+    setUser(user.user)
   }
-
-  useEffect(() => {
-    let check = false
-    for (let key in value) {
-      check = value[key].length
-    }
-    setisFullfilled(check)
-
-  }, [value])
 
   return (
     <form onSubmit={onSubmit} className={`${styles.form} flex flex-col gap-6 mb-10`}>
       <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={onChange}
+        onChange={setValue}
         value={value.name}
         name={'name'}
         error={false}
@@ -46,20 +28,21 @@ const FormRegister = () => {
       />
 
       <EmailInput
-        onChange={onChange}
+        onChange={setValue}
         value={value.email}
         name={'email'}
         placeholder="E-mail"
       />
 
       <PasswordInput
-        onChange={onChange}
+        onChange={setValue}
         value={value.password}
         name={'password'}
+        errorText={'Должно быть минимум 8 знаков'}
       />
 
       <Button
-        disabled={!isFullfilled}
+        disabled={!isFilled}
         htmlType="submit"
       >
         Зарегистрироваться

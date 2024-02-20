@@ -2,10 +2,10 @@ import './App.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
 
-import { useState, useCallback, useReducer } from 'react';
+import { useCallback, useReducer } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import { BurgerOrderContext } from '../../context/BurgerOrderContext'
+import { BurgerContext } from '../../context/BurgerContext'
 import Header from '../header/Header';
 
 import MainPage from '../../pages/Main';
@@ -14,10 +14,16 @@ import Profile from '../../pages/Profile/Profile';
 import Register from '../../pages/Register';
 import Login from '../../pages/Login';
 
-import ingredientsService from '../../utils/api';
+import ingredientsService from '../../service/ingredientsService';
 
 function reducer(state, action) {
   switch (action.type) {
+    case 'USER': {
+      return {
+        ...state,
+        user: action.payload
+      }
+    }
     case 'ADD': {
       return {
         ...state,
@@ -54,7 +60,7 @@ function reducer(state, action) {
 function App() {
   const getData = new ingredientsService();
 
-  const [order, dispatch] = useReducer(reducer, { bun: null, ingredients: [], price: 0 });
+  const [order, dispatch] = useReducer(reducer, { user: null, bun: null, ingredients: [], price: 0 });
 
   const addIngredient = useCallback((elem) => {
     if (elem.type === 'bun') {
@@ -77,14 +83,18 @@ function App() {
     }).catch(console.error);
   }
 
+  const setUser = (user) => {
+    dispatch({ type: 'USER', payload: user })
+  }
+
   return (
-    <Router>
-      <BurgerOrderContext.Provider value={order}>
+    <Router basename="/react-PR-stage-2">
+      <BurgerContext.Provider value={order}>
         <Header />
         <main>
           <div className="container">
             <Routes>
-              <Route path="/react-PR-stage-2/"
+              <Route path="/"
                 element={
                   <MainPage
                     addIngredient={addIngredient}
@@ -93,15 +103,15 @@ function App() {
                   />
                 } />
 
-              <Route path='/react-PR-stage-2/profile' element={<Profile />} />
-              <Route path='/react-PR-stage-2/register' element={<Register />} />
-              <Route path='/react-PR-stage-2/login' element={<Login />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/register' element={<Register setUser={setUser} />} />
+              <Route path='/login' element={<Login />} />
 
               <Route path='*' element={<ErrorPage />} />
             </Routes>
           </div>
         </main>
-      </BurgerOrderContext.Provider >
+      </BurgerContext.Provider >
     </Router>
   );
 }

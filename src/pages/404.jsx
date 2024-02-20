@@ -1,4 +1,3 @@
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { Link } from 'react-router-dom';
 
 const ErrorPage = () => {
@@ -6,7 +5,7 @@ const ErrorPage = () => {
     <div className='center-page'>
       <p className="text text_type_digits-large">404</p>
       <h1 className="text text_type_main-large">Упс, такой страницы не существует</h1>
-      <Link to="/react-PR-stage-2/" className="link text text_type_main-default">На главную</Link>
+      <Link to="/" className="link text text_type_main-default">На главную</Link>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-export const BurgerOrderContext = createContext({
+export const BurgerContext = createContext({
   order: [],
 });

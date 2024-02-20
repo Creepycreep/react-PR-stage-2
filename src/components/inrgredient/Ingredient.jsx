@@ -1,7 +1,7 @@
 import styles from './Ingredient.module.css'
 
 import { useDrag } from 'react-dnd'
-import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
 const Ingredient = ({ onIngredientClick, elem, onChoose }) => {
   const [{ isDragging }, drag] = useDrag(() => ({

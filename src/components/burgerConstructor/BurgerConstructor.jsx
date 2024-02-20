@@ -4,10 +4,10 @@ import { useDrop } from 'react-dnd'
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useContext } from 'react';
 
-import { BurgerOrderContext } from '../../context/BurgerOrderContext'
+import { BurgerContext } from '../../context/BurgerContext'
 
 const BurgerConstructor = ({ makeOrder, removeIngredient, orderPrice }) => {
-  const order = useContext(BurgerOrderContext)
+  const order = useContext(BurgerContext)
 
   const [{ canDrop }, drop] = useDrop(() => ({
     accept: 'box',

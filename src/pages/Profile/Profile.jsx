@@ -1,7 +1,6 @@
 import styles from './Profile.module.css'
 
 import { Link } from 'react-router-dom';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import FormProfile from '../../components/formProfile/FormProfile';
 
 const Profile = () => {

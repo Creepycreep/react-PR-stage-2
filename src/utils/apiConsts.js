@@ -1,9 +1,10 @@
-export const API = {
-  _ingredients: 'https://norma.nomoreparties.space/api/ingredients',
-  _orders: 'https://norma.nomoreparties.space/api/orders',
+const _API_BASE = 'https://norma.nomoreparties.space/api'
 
-  _register: 'https://norma.nomoreparties.space/api/auth/register',
-  _login: 'https://norma.nomoreparties.space/api/auth/login',
-  _logout: 'https://norma.nomoreparties.space/api/auth/logout',
-  _refresh: 'https://norma.nomoreparties.space/api/auth/token',
+export const API = {
+  _ingredients: _API_BASE + '/ingredients',
+  _orders: _API_BASE + '/orders',
+  _register: _API_BASE + '/auth/register',
+  _login: _API_BASE + '/auth/login',
+  _logout: _API_BASE + '/auth/logout',
+  _refresh: _API_BASE + '/auth/token',
 }

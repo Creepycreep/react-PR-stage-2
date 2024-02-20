@@ -10,11 +10,11 @@ import OrderDetails from '../components/orderDetails/OrderDetails';
 
 import Modal from '../components/modal/Modal'
 
-import { BurgerOrderContext } from '../context/BurgerOrderContext'
-import ingredientsService from '../utils/api';
+import { BurgerContext } from '../context/BurgerContext'
+import ingredientsService from '../service/ingredientsService';
 
 const MainPage = ({ addIngredient, removeIngredient, makeOrder }) => {
-  const order = useContext(BurgerOrderContext)
+  const order = useContext(BurgerContext)
   const getData = new ingredientsService();
 
   const [detailIngredient, setDetailIngredient] = useState({})

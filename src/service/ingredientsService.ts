@@ -1,5 +1,5 @@
-import { ingredient } from './../components/types/Types';
-import { API } from './apiConsts';
+import { ingredient } from '../components/types/Types';
+import { API } from '../utils/apiConsts';
 class ingredientsService {
 
   postOrder = async (ingredient: Array<string>) => {

@@ -1,43 +1,30 @@
 import styles from './FormProfile.module.css'
 
-import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useContext } from 'react'
+import { BurgerContext } from '../../context/BurgerContext'
 
 const FormProfile = () => {
-  const [value, setValue] = useState('')
-  const onChange = e => {
-    setValue(e.target.value)
-  }
+  const context = useContext(BurgerContext)
 
   return (
-    <form className={`${styles.form} flex flex-col gap-6 mb-10`}>
+    <form className={`${styles.form} flex flex-col gap-6 mb-10`
+    }>
       <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={e => setValue(e.target.value)}
-        value={value}
+        value={context.user.name}
         name={'name'}
         error={false}
         errorText={'Ошибка'}
         size={'default'}
-
-        icon={'EditIcon'}
-        onIconClick={null}
+        disabled
       />
 
       <EmailInput
-        onChange={onChange}
-        value={value}
+        value={context.user.email}
         name={'email'}
         placeholder="Логин"
-        isIcon={true}
-      />
-
-      <PasswordInput
-        onChange={onChange}
-        value={value}
-        name={'password'}
-        icon="EditIcon"
       />
     </form>
   )
