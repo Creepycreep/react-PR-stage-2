@@ -22,9 +22,24 @@ export class userService {
     return result
   }
 
-  getUser = async () => {
+  userLogin = async (data) => {
+    const result = await fetch(API._login, {
+      method: 'POST', headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }, body: JSON.stringify(data)
+    }).then(res => {
+      if (!res || !res.ok) {
+        throw new Error('Error!')
+      }
+      return res.json()
+    }).catch(console.error);
 
+    localStorage.setItem('refreshToken', result.refreshToken);
+    localStorage.setItem('accessToken', result.accessToken);
+    this.navigate('/')
+    return result
   }
+
 
   checkUserAuth = () => {
     if (localStorage.getItem("accessToken") && localStorage.getItem('refreshToken')) {

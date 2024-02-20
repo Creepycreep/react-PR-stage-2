@@ -1,4 +1,4 @@
-import { ingredient } from '../components/types/Types';
+import { ingredient } from '../types/Types';
 import { API } from '../utils/apiConsts';
 class ingredientsService {
 

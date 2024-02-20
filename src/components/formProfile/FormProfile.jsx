@@ -19,12 +19,15 @@ const FormProfile = () => {
         errorText={'Ошибка'}
         size={'default'}
         disabled
+        readOnly
       />
 
       <EmailInput
         value={context.user.email}
         name={'email'}
         placeholder="Логин"
+        readOnly
+        disabled
       />
     </form>
   )

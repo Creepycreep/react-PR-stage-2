@@ -11,7 +11,12 @@ export const useForm = (initial) => {
   useEffect(() => {
     let check = false
     for (let key in value) {
-      if (key) check = value[key].length
+      if (value[key].length) {
+        check = !!value[key].length
+      } else {
+        check = false
+        break
+      }
     }
     setIsFilled(check)
 

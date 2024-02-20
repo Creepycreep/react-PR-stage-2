@@ -2,29 +2,33 @@ import styles from './FormLogin.module.css'
 
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { useContext, useState } from 'react'
+import { userService } from '../../service/userService'
+import { useForm } from '../../hooks/useForm'
 
-const FormLogin = () => {
-  const [value, setValue] = useState('')
-  const onChange = e => {
-    setValue(e.target.value)
+const FormLogin = ({ setUser }) => {
+  const [value, setValue, isFilled] = useForm({ email: '', password: '' })
+  const login = new userService()
+
+  const onSubmit = async e => {
+    e.preventDefault();
+    const user = await login.userLogin(value)
+    setUser(user.user)
   }
-
   return (
-    <form className={`${styles.form} flex flex-col gap-6 mb-10`}>
+    <form onSubmit={onSubmit} className={`${styles.form} flex flex-col gap-6 mb-10`}>
       <EmailInput
-        onChange={onChange}
-        value={value}
+        onChange={setValue}
+        value={value.email}
         name={'email'}
         placeholder="E-mail"
       />
 
       <PasswordInput
-        onChange={onChange}
-        value={value}
+        onChange={setValue}
+        value={value.password}
         name={'password'}
       />
-      <Button htmlType="button" >Войти</Button>
+      <Button htmlType="submit" disabled={!isFilled}>Войти</Button>
     </form>
   )
 }
