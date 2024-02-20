@@ -103,7 +103,7 @@ function App() {
                   />
                 } />
 
-              <Route path='/profile' element={<Profile />} />
+              <Route path='/profile' element={<Profile setUser={setUser} />} />
               <Route path='/register' element={<Register setUser={setUser} />} />
               <Route path='/login' element={<Login setUser={setUser} />} />
 

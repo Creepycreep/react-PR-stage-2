@@ -11,6 +11,7 @@ const FormRegister = ({ setUser }) => {
   const onSubmit = async e => {
     e.preventDefault();
     const user = await registration.userRegister(value)
+
     setUser(user.user)
   }
 

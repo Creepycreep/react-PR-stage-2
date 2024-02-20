@@ -2,3 +2,7 @@
   width: max-content;
   align-self: center;
 }
+
+.error {
+  color: var(--colors-interface-error);
+}

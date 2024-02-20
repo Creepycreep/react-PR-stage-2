@@ -14,7 +14,7 @@ export class userService {
         throw new Error('Error!')
       }
       return res.json()
-    }).catch(console.error);
+    }).catch(console.error)
 
     localStorage.setItem('refreshToken', result.refreshToken);
     localStorage.setItem('accessToken', result.accessToken);
@@ -22,7 +22,7 @@ export class userService {
     return result
   }
 
-  userLogin = async (data) => {
+  userLogin = async (data, setError) => {
     const result = await fetch(API._login, {
       method: 'POST', headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -32,14 +32,33 @@ export class userService {
         throw new Error('Error!')
       }
       return res.json()
-    }).catch(console.error);
+    }).then(res => {
+      setError(false)
+      localStorage.setItem('refreshToken', res.refreshToken);
+      localStorage.setItem('accessToken', res.accessToken);
+      this.navigate('/')
 
-    localStorage.setItem('refreshToken', result.refreshToken);
-    localStorage.setItem('accessToken', result.accessToken);
-    this.navigate('/')
+      return res
+    }).catch(console.error)
     return result
   }
 
+  userLogout = async () => {
+    const result = await fetch(API._login, {
+      method: 'POST', headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }, body: JSON.stringify(localStorage.getItem('refreshToken'))
+    }).then(res => {
+      if (!res || !res.ok) {
+        throw new Error('Error!')
+      }
+      return res.json()
+    }).catch(console.error)
+
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('accessToken');
+    this.navigate('/login')
+  }
 
   checkUserAuth = () => {
     if (localStorage.getItem("accessToken") && localStorage.getItem('refreshToken')) {
