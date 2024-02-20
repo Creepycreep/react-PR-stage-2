@@ -11,8 +11,6 @@ import Header from '../header/Header';
 import MainPage from '../../pages/Main';
 import ErrorPage from '../../pages/404';
 import Profile from '../../pages/Profile/Profile';
-import ResetPassword from '../../pages/ResetPassword';
-import ForgotPassword from '../../pages/ForgotPassword';
 import Register from '../../pages/Register';
 import Login from '../../pages/Login';
 
@@ -96,8 +94,6 @@ function App() {
                 } />
 
               <Route path='/react-PR-stage-2/profile' element={<Profile />} />
-              <Route path='/react-PR-stage-2/reset-password' element={<ResetPassword />} />
-              <Route path='/react-PR-stage-2/forgot-password' element={<ForgotPassword />} />
               <Route path='/react-PR-stage-2/register' element={<Register />} />
               <Route path='/react-PR-stage-2/login' element={<Login />} />
 
