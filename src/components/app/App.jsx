@@ -2,7 +2,7 @@ import './App.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
 
-import { useCallback, useReducer } from 'react';
+import { useCallback, useReducer, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { BurgerContext } from '../../context/BurgerContext'
@@ -14,7 +14,10 @@ import Profile from '../../pages/Profile/Profile';
 import Register from '../../pages/Register';
 import Login from '../../pages/Login';
 
+import ProtectedRoute from '../protectedRoute/ProtectedRoute';
+
 import ingredientsService from '../../service/ingredientsService';
+import { userService } from '../../service/userService'
 
 function reducer(state, action) {
   switch (action.type) {
@@ -59,6 +62,7 @@ function reducer(state, action) {
 
 function App() {
   const getData = new ingredientsService();
+  const user = new userService()
 
   const [order, dispatch] = useReducer(reducer, { user: null, bun: null, ingredients: [], price: 0 });
 
@@ -87,6 +91,10 @@ function App() {
     dispatch({ type: 'USER', payload: user })
   }
 
+  useEffect(() => {
+    user.checkUserAuth(setUser)
+  }, [])
+
   return (
     <Router basename="/react-PR-stage-2">
       <BurgerContext.Provider value={order}>
@@ -102,8 +110,12 @@ function App() {
                     makeOrder={makeOrder}
                   />
                 } />
+              <Route path='/profile' element={
+                <ProtectedRoute user={order.user}>
+                  <Profile setUser={setUser} />
+                </ProtectedRoute>
+              } />
 
-              <Route path='/profile' element={<Profile setUser={setUser} />} />
               <Route path='/register' element={<Register setUser={setUser} />} />
               <Route path='/login' element={<Login setUser={setUser} />} />
 
@@ -112,7 +124,7 @@ function App() {
           </div>
         </main>
       </BurgerContext.Provider >
-    </Router>
+    </Router >
   );
 }
 

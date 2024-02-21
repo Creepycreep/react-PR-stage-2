@@ -1,8 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { API } from '../utils/apiConsts';
 
 export class userService {
-  navigate = useNavigate()
 
   userRegister = async (data) => {
     const result = await fetch(API._register, {
@@ -18,7 +16,6 @@ export class userService {
 
     localStorage.setItem('refreshToken', result.refreshToken);
     localStorage.setItem('accessToken', result.accessToken);
-    this.navigate('/profile')
     return result
   }
 
@@ -36,7 +33,6 @@ export class userService {
       setError(false)
       localStorage.setItem('refreshToken', res.refreshToken);
       localStorage.setItem('accessToken', res.accessToken);
-      this.navigate('/')
 
       return res
     }).catch(console.error)
@@ -57,11 +53,68 @@ export class userService {
 
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('accessToken');
-    this.navigate('/')
   }
 
-  checkUserAuth = () => {
-    if (localStorage.getItem("accessToken") && localStorage.getItem('refreshToken')) {
+  getUser = async () => {
+    try {
+      const result = await fetch(API._user, {
+        method: 'GET', headers: {
+          "authorization": localStorage.getItem('accessToken')
+        }
+      })
+
+      if (!result || !result.ok) {
+        throw new Error('Error!')
+      }
+      return result.json()
+    } catch {
+      const access = await this.refreshToken()
+
+      const result = await fetch(API._user, {
+        method: 'GET', headers: {
+          "authorization": access
+        }
+      })
+
+      if (!result || !result.ok) {
+        throw new Error('Error!')
+      }
+      return result.json()
+    }
+  }
+
+  refreshToken = async () => {
+    const result = await fetch(API._refresh, {
+      method: 'POST', headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        token: localStorage.getItem("refreshToken"),
+      }),
+    }).then(res => {
+      if (!res || !res.ok) {
+        throw new Error('Error!')
+      }
+      return res.json()
+    }).catch(console.error)
+      .then(res => {
+        localStorage.setItem('refreshToken', res.refreshToken);
+        localStorage.setItem('accessToken', res.accessToken);
+
+        return res.accessToken
+      })
+
+    return result
+  }
+
+  checkUserAuth = (setUser) => {
+    if (localStorage.getItem("accessToken") && localStorage.getItem('accessToken')) {
+      this.getUser().then(res => {
+        setUser(res.user)
+      })
+    } else {
+      setUser(false)
     }
   };
+
 }

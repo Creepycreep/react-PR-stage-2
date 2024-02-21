@@ -7,4 +7,5 @@ export const API = {
   _login: _API_BASE + '/auth/login',
   _logout: _API_BASE + '/auth/logout',
   _refresh: _API_BASE + '/auth/token',
+  _user: _API_BASE + '/auth/user'
 }

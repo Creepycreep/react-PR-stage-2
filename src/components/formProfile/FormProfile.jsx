@@ -13,7 +13,7 @@ const FormProfile = () => {
       <Input
         type={'text'}
         placeholder={'Имя'}
-        value={context.user.name}
+        value={context.user?.name || ''}
         name={'name'}
         error={false}
         errorText={'Ошибка'}
@@ -23,7 +23,7 @@ const FormProfile = () => {
       />
 
       <EmailInput
-        value={context.user.email}
+        value={context.user?.email || ''}
         name={'email'}
         placeholder="Логин"
         readOnly

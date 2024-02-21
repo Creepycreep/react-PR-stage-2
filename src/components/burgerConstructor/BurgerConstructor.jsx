@@ -3,11 +3,22 @@ import styles from './BurgerConstructor.module.css'
 import { useDrop } from 'react-dnd'
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 
 import { BurgerContext } from '../../context/BurgerContext'
 
 const BurgerConstructor = ({ makeOrder, removeIngredient, orderPrice }) => {
   const order = useContext(BurgerContext)
+  const navigate = useNavigate()
+
+  const onClick = () => {
+    if (!order.user) {
+      navigate('/login')
+      return
+    }
+
+    makeOrder()
+  }
 
   const [{ canDrop }, drop] = useDrop(() => ({
     accept: 'box',
@@ -70,7 +81,7 @@ const BurgerConstructor = ({ makeOrder, removeIngredient, orderPrice }) => {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={makeOrder}>
+          onClick={onClick}>
           Оформить заказ
         </Button>
       </div>

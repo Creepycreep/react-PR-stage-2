@@ -1,4 +1,5 @@
 import styles from './Profile.module.css'
+import { useNavigate } from "react-router-dom";
 
 import { Link } from 'react-router-dom';
 import FormProfile from '../../components/formProfile/FormProfile';
@@ -6,10 +7,12 @@ import FormProfile from '../../components/formProfile/FormProfile';
 import { userService } from '../../service/userService'
 const Profile = ({ setUser }) => {
   const logout = new userService()
+  const navigate = useNavigate()
 
   const onClick = async () => {
     const log = await logout.userLogout()
     setUser(null)
+    navigate('/login')
   }
 
   return (

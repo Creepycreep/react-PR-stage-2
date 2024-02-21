@@ -1,11 +1,15 @@
 import styles from './FormRegister.module.css'
 
+import { useNavigate } from "react-router-dom";
+
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { userService } from '../../service/userService'
 import { useForm } from '../../hooks/useForm'
 
 const FormRegister = ({ setUser }) => {
   const [value, setValue, isFilled] = useForm({ name: '', email: '', password: '' })
+  const navigate = useNavigate()
+
   const registration = new userService()
 
   const onSubmit = async e => {
@@ -13,6 +17,7 @@ const FormRegister = ({ setUser }) => {
     const user = await registration.userRegister(value)
 
     setUser(user.user)
+    navigate('/')
   }
 
   return (

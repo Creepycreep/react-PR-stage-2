@@ -28,8 +28,19 @@
 
   }
 
+  a:hover {
+    transition: all .3s;
+  }
+
   button {
     background: transparent;
     border: 0;
+
+    transition: all .3s;
+  }
+
+  a:hover,
+  button:hover {
+    color: white;
   }
 }
