@@ -111,16 +111,15 @@ export class userService {
     return result
   }
 
-  checkUserAuth = (setUser: (user: user | null) => void, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
-    setIsLoading(true)
+  checkUserAuth = (setUser: (user: user | null) => void, setIsChecked: React.Dispatch<React.SetStateAction<boolean>>) => {
     if (localStorage.getItem("accessToken") && localStorage.getItem('accessToken')) {
       this.getUser().then(res => {
         setUser(res.user)
-        setIsLoading(false)
+        setIsChecked(true)
       })
     } else {
       setUser(null)
-      setIsLoading(false)
+      setIsChecked(true)
     }
   };
 

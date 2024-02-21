@@ -67,7 +67,7 @@ function App() {
   const getData = new ingredientsService();
   const user = new userService()
 
-  const [isLoading, setIsLoading] = useState(true)
+  const [isChecked, setIsChecked] = useState(false)
   const [order, dispatch] = useReducer<React.Reducer<context, any>>(reducer, { user: null, bun: null, ingredients: [], price: 0, orderNum: null });
 
   const addIngredient = useCallback((elem: ingredient) => {
@@ -96,7 +96,7 @@ function App() {
   }
 
   useEffect(() => {
-    user.checkUserAuth(setUser, setIsLoading)
+    user.checkUserAuth(setUser, setIsChecked)
   }, [])
 
   return (
@@ -116,7 +116,7 @@ function App() {
                 } />
 
               <Route path='/profile' element={
-                !isLoading ?
+                isChecked ?
                   <ProtectedRoute user={order.user}>
                     <Profile setUser={setUser} />
                   </ProtectedRoute>
