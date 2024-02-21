@@ -20,10 +20,6 @@ const Profile = ({ setUser }) => {
           <Link className='text text_type_main-medium text_color_inactive'>История заказов</Link>
           <button onClick={onClick} className='text text_type_main-medium text_color_inactive'>Выход</button>
         </nav>
-        <p className='text text_type_main-default text_color_inactive mt-20'>
-          В этом разделе вы можете
-          изменить свои персональные данные
-        </p>
       </aside>
 
       <FormProfile />

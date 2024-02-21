@@ -44,10 +44,10 @@ export class userService {
   }
 
   userLogout = async () => {
-    const result = await fetch(API._login, {
+    const result = await fetch(API._logout, {
       method: 'POST', headers: {
         'Content-Type': 'application/json;charset=utf-8'
-      }, body: JSON.stringify(localStorage.getItem('refreshToken'))
+      }, body: JSON.stringify({ token: localStorage.getItem('refreshToken') })
     }).then(res => {
       if (!res || !res.ok) {
         throw new Error('Error!')
@@ -57,7 +57,7 @@ export class userService {
 
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('accessToken');
-    this.navigate('/login')
+    this.navigate('/')
   }
 
   checkUserAuth = () => {
