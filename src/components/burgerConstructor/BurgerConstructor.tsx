@@ -11,10 +11,11 @@ import { BurgerContext } from '../../context/BurgerContext'
 
 type PropsType = {
   makeOrder: () => Promise<void>,
-  removeIngredient: (elem: ingredient, i: number) => void
+  removeIngredient: (elem: ingredient, i: number) => void,
+  isOrderLoading: boolean
 }
 
-const BurgerConstructor = ({ makeOrder, removeIngredient }: PropsType) => {
+const BurgerConstructor = ({ makeOrder, removeIngredient, isOrderLoading }: PropsType) => {
   const order = useContext(BurgerContext)
   const navigate = useNavigate()
 
@@ -84,12 +85,12 @@ const BurgerConstructor = ({ makeOrder, removeIngredient }: PropsType) => {
           <CurrencyIcon type="primary" />
         </p>
         <Button
-          disabled={!(order?.bun && order?.ingredients.length)}
+          disabled={!(order?.bun && order?.ingredients.length) || isOrderLoading}
           htmlType="button"
           type="primary"
           size="large"
           onClick={onClick}>
-          Оформить заказ
+          {isOrderLoading ? 'Ожидайте' : 'Оформить заказ'}
         </Button>
       </div>
     </div>

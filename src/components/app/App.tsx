@@ -57,6 +57,14 @@ function reducer(state: context, action: any) {
         orderNum: action.payload
       }
     }
+    case 'REFRESH_ORDER': {
+      return {
+        ...state,
+        bun: null,
+        ingredients: [],
+        price: 0
+      }
+    }
     default: {
       throw new Error('Unknown action');
     }
@@ -68,6 +76,8 @@ function App() {
   const user = new userService()
 
   const [isChecked, setIsChecked] = useState(false)
+  const [isOrderLoading, setisOrderLoading] = useState(false)
+
   const [order, dispatch] = useReducer<React.Reducer<context, any>>(reducer, { user: null, bun: null, ingredients: [], price: 0, orderNum: null });
 
   const addIngredient = useCallback((elem: ingredient) => {
@@ -86,8 +96,13 @@ function App() {
 
   const makeOrder = async () => {
     const data = order.bun ? [...order.ingredients.map((elem: ingredient) => elem._id), order.bun._id] : [...order.ingredients.map((elem: ingredient) => elem._id)]
+    setisOrderLoading(true)
+
     getData.postOrder(data).then(res => {
       dispatch({ type: 'MAKE_ORDER', payload: res.order.number })
+      setisOrderLoading(false)
+    }).then(res => {
+      dispatch({ type: 'REFRESH_ORDER' })
     }).catch(console.error);
   }
 
@@ -112,6 +127,7 @@ function App() {
                     addIngredient={addIngredient}
                     removeIngredient={removeIngredient}
                     makeOrder={makeOrder}
+                    isOrderLoading={isOrderLoading}
                   />
                 } />
 

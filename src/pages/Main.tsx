@@ -18,9 +18,10 @@ import ingredientsService from '../service/ingredientsService';
 type Props = {
   addIngredient: (elem: ingredient) => void
   makeOrder: () => Promise<void>,
-  removeIngredient: (elem: ingredient, i: number) => void
+  removeIngredient: (elem: ingredient, i: number) => void,
+  isOrderLoading: boolean
 }
-const MainPage = ({ addIngredient, removeIngredient, makeOrder }: Props) => {
+const MainPage = ({ isOrderLoading, addIngredient, removeIngredient, makeOrder }: Props) => {
   const order = useContext(BurgerContext)
   const getData = new ingredientsService();
 
@@ -63,6 +64,7 @@ const MainPage = ({ addIngredient, removeIngredient, makeOrder }: Props) => {
           />
 
           <BurgerConstructor
+            isOrderLoading={isOrderLoading}
             removeIngredient={removeIngredient}
             makeOrder={makeOrder}
           />
