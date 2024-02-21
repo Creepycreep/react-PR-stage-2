@@ -2,7 +2,7 @@ import './App.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
 
-import { useCallback, useReducer, useEffect } from 'react';
+import { useCallback, useReducer, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { BurgerContext } from '../../context/BurgerContext'
@@ -67,6 +67,7 @@ function App() {
   const getData = new ingredientsService();
   const user = new userService()
 
+  const [isLoading, setIsLoading] = useState(true)
   const [order, dispatch] = useReducer<React.Reducer<context, any>>(reducer, { user: null, bun: null, ingredients: [], price: 0, orderNum: null });
 
   const addIngredient = useCallback((elem: ingredient) => {
@@ -95,7 +96,7 @@ function App() {
   }
 
   useEffect(() => {
-    user.checkUserAuth(setUser)
+    user.checkUserAuth(setUser, setIsLoading)
   }, [])
 
   return (
@@ -113,10 +114,13 @@ function App() {
                     makeOrder={makeOrder}
                   />
                 } />
+
               <Route path='/profile' element={
-                <ProtectedRoute user={order.user}>
-                  <Profile setUser={setUser} />
-                </ProtectedRoute>
+                !isLoading ?
+                  <ProtectedRoute user={order.user}>
+                    <Profile setUser={setUser} />
+                  </ProtectedRoute>
+                  : null
               } />
 
               <Route path='/register' element={<Register setUser={setUser} />} />

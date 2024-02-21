@@ -21,7 +21,6 @@ const Profile = ({ setUser }: { setUser: (user: user | null) => void }) => {
       <aside className={styles.aside}>
         <nav className={styles.nav}>
           <Link to='/profile' className='text text_type_main-medium'>Профиль</Link>
-          <Link to='/order-history' className='text text_type_main-medium text_color_inactive'>История заказов</Link>
           <button onClick={onClick} className='text text_type_main-medium text_color_inactive'>Выход</button>
         </nav>
       </aside>
