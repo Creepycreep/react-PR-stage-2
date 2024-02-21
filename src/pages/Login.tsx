@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
+import { user } from '../types/Types';
+
 import FormLogin from '../components/formLogin/FormLogin'
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser }: { setUser: (user: user | null) => void }) => {
   return (
     <div className="center-page">
       <h1 className="text text_type_main-medium">Вход</h1>

@@ -3,7 +3,7 @@ import done from '../../images/done.png'
 
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
-const OrderDetails = ({ num }) => {
+const OrderDetails = ({ num }: { num: number | null }) => {
   return (
     <div className={styles.card}>
       <h3 className="text text_type_digits-large mb-8">{num}</h3>

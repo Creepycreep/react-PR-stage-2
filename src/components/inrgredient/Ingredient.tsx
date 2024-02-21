@@ -1,9 +1,12 @@
 import styles from './Ingredient.module.css'
+import { ingredient } from '../../types/Types'
 
 import { useDrag } from 'react-dnd'
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
-const Ingredient = ({ onIngredientClick, elem, onChoose }) => {
+const Ingredient = ({ onIngredientClick, elem, onChoose }: {
+  onIngredientClick: (elem: ingredient) => void, elem: ingredient, onChoose: (elem: ingredient) => void
+}) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'box',
     item: { elem },

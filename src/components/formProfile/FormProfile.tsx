@@ -3,9 +3,11 @@ import styles from './FormProfile.module.css'
 import { EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useContext } from 'react'
 import { BurgerContext } from '../../context/BurgerContext'
+import { useForm } from '../../hooks/useForm'
 
 const FormProfile = () => {
   const context = useContext(BurgerContext)
+  const [value, setValue] = useForm({ email: '', password: '' })
 
   return (
     <form className={`${styles.form} flex flex-col gap-6 mb-10`
@@ -13,21 +15,22 @@ const FormProfile = () => {
       <Input
         type={'text'}
         placeholder={'Имя'}
-        value={context.user?.name || ''}
+        value={context?.user?.name || ''}
         name={'name'}
         error={false}
         errorText={'Ошибка'}
         size={'default'}
         disabled
-        readOnly
+        onChange={setValue}
       />
 
       <EmailInput
-        value={context.user?.email || ''}
+        value={context?.user?.email || ''}
         name={'email'}
         placeholder="Логин"
         readOnly
         disabled
+        onChange={setValue}
       />
     </form>
   )

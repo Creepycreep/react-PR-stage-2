@@ -1,8 +1,9 @@
 import { API } from '../utils/apiConsts';
+import { user } from '../types/Types';
 
 export class userService {
 
-  userRegister = async (data) => {
+  userRegister = async (data: { name: string, email: string, password: string }) => {
     const result = await fetch(API._register, {
       method: 'POST', headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -19,7 +20,7 @@ export class userService {
     return result
   }
 
-  userLogin = async (data, setError) => {
+  userLogin = async (data: { email: string, password: string }, setError: React.Dispatch<React.SetStateAction<boolean>>) => {
     const result = await fetch(API._login, {
       method: 'POST', headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -59,7 +60,7 @@ export class userService {
     try {
       const result = await fetch(API._user, {
         method: 'GET', headers: {
-          "authorization": localStorage.getItem('accessToken')
+          "authorization": `${localStorage.getItem('accessToken')}`
         }
       })
 
@@ -96,7 +97,10 @@ export class userService {
         throw new Error('Error!')
       }
       return res.json()
-    }).catch(console.error)
+    }).catch(error => {
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('accessToken');
+    })
       .then(res => {
         localStorage.setItem('refreshToken', res.refreshToken);
         localStorage.setItem('accessToken', res.accessToken);
@@ -107,13 +111,13 @@ export class userService {
     return result
   }
 
-  checkUserAuth = (setUser) => {
+  checkUserAuth = (setUser: (user: user | null) => void) => {
     if (localStorage.getItem("accessToken") && localStorage.getItem('accessToken')) {
       this.getUser().then(res => {
         setUser(res.user)
       })
     } else {
-      setUser(false)
+      setUser(null)
     }
   };
 

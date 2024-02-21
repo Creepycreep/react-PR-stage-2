@@ -2,6 +2,8 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useState, useCallback, useContext, useEffect } from 'react';
 
+import { ingredient, category } from '../types/Types';
+
 import BurgerIngredients from '../components/burgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../components/burgerConstructor/BurgerConstructor';
 
@@ -13,15 +15,20 @@ import Modal from '../components/modal/Modal'
 import { BurgerContext } from '../context/BurgerContext'
 import ingredientsService from '../service/ingredientsService';
 
-const MainPage = ({ addIngredient, removeIngredient, makeOrder }) => {
+type Props = {
+  addIngredient: (elem: ingredient) => void
+  makeOrder: () => Promise<void>,
+  removeIngredient: (elem: ingredient, i: number) => void
+}
+const MainPage = ({ addIngredient, removeIngredient, makeOrder }: Props) => {
   const order = useContext(BurgerContext)
   const getData = new ingredientsService();
 
-  const [detailIngredient, setDetailIngredient] = useState({})
-  const [ingredients, setIngredients] = useState([])
+  const [detailIngredient, setDetailIngredient] = useState<ingredient | null>(null)
+  const [ingredients, setIngredients] = useState<Array<category>>([])
 
   const handleIngredient = useCallback(
-    (elem) => {
+    (elem: ingredient) => {
       setDetailIngredient(elem)
     }, [])
 
@@ -37,10 +44,10 @@ const MainPage = ({ addIngredient, removeIngredient, makeOrder }) => {
   }, [])
 
   useEffect(() => {
-    if (order.orderNum) {
+    if (order?.orderNum) {
       setIsModalOrderVisible(true)
     }
-  }, [order.orderNum])
+  }, [order?.orderNum])
 
   return (
     <>
@@ -57,7 +64,6 @@ const MainPage = ({ addIngredient, removeIngredient, makeOrder }) => {
 
           <BurgerConstructor
             removeIngredient={removeIngredient}
-            orderPrice={order}
             makeOrder={makeOrder}
           />
         </div>
@@ -74,7 +80,7 @@ const MainPage = ({ addIngredient, removeIngredient, makeOrder }) => {
       {isModalOrderVisible ?
         <Modal setVisibility={setIsModalOrderVisible}
         >
-          {<OrderDetails num={order.orderNum} />}
+          {<OrderDetails num={order ? order.orderNum : 0} />}
         </Modal>
         : null}
     </>

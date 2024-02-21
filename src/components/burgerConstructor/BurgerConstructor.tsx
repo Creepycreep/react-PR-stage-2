@@ -1,5 +1,7 @@
 import styles from './BurgerConstructor.module.css'
 
+import { ingredient } from '../../types/Types';
+
 import { useDrop } from 'react-dnd'
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useContext } from 'react';
@@ -7,12 +9,17 @@ import { useNavigate } from "react-router-dom";
 
 import { BurgerContext } from '../../context/BurgerContext'
 
-const BurgerConstructor = ({ makeOrder, removeIngredient, orderPrice }) => {
+type PropsType = {
+  makeOrder: () => Promise<void>,
+  removeIngredient: (elem: ingredient, i: number) => void
+}
+
+const BurgerConstructor = ({ makeOrder, removeIngredient }: PropsType) => {
   const order = useContext(BurgerContext)
   const navigate = useNavigate()
 
   const onClick = () => {
-    if (!order.user) {
+    if (order && !order.user) {
       navigate('/login')
       return
     }
@@ -30,7 +37,7 @@ const BurgerConstructor = ({ makeOrder, removeIngredient, orderPrice }) => {
   return (
     <div className={'col custom-scroll flex flex-col'}>
       <section ref={drop} className={`${canDrop ? styles['can-drop'] : ''} ${styles.col} gap-5 flex flex-col`}>
-        {order.bun ?
+        {order?.bun ?
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -40,7 +47,7 @@ const BurgerConstructor = ({ makeOrder, removeIngredient, orderPrice }) => {
           />
           : null}
 
-        {order.ingredients.length ?
+        {order?.ingredients.length ?
           <ul className={styles.list + ' custom-scroll col gap-5 flex flex-col'}>
             {order.ingredients.map((element, i) => {
               return (
@@ -57,7 +64,7 @@ const BurgerConstructor = ({ makeOrder, removeIngredient, orderPrice }) => {
           </ul>
           : null}
 
-        {order.bun ?
+        {order?.bun ?
           <ConstructorElement
             type="bottom"
             isLocked={true}
@@ -72,12 +79,12 @@ const BurgerConstructor = ({ makeOrder, removeIngredient, orderPrice }) => {
       <div className={styles.total + ' flex flex-align-center pt-5 gap-10'}>
         <p className="text text_type_digits-medium">
           <span className='mr-2'>
-            {orderPrice.price}
+            {order?.price}
           </span>
           <CurrencyIcon type="primary" />
         </p>
         <Button
-          disabled={!(order.bun && order.ingredients.length)}
+          disabled={!(order?.bun && order?.ingredients.length)}
           htmlType="button"
           type="primary"
           size="large"

@@ -1,25 +1,38 @@
 import styles from './BurgerIngredients.module.css'
 import { useState, memo, useEffect, useRef } from "react"
+import { ingredient, category } from '../../types/Types';
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 import Ingredient from '../inrgredient/Ingredient'
 
-const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModalVisibility, handleIngredient, onChoose }) {
+type PropsType = {
+  ingredients: Array<category>,
+  setModalVisibility: React.Dispatch<React.SetStateAction<boolean>>,
+  handleIngredient: (elem: ingredient) => void,
+  onChoose: (elem: ingredient) => void
+}
+
+type sectionsRefType = {
+  [key: string]: React.MutableRefObject<HTMLElement | null>
+}
+
+const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModalVisibility, handleIngredient, onChoose }: PropsType) {
   const [current, setCurrent] = useState('bun');
 
-  const onIngredientClick = (elem) => {
+  const onIngredientClick = (elem: ingredient) => {
     handleIngredient(elem)
     setModalVisibility(true)
   }
 
-  const sectionsRef = {
-    bun: useRef(null),
-    main: useRef(null),
-    sauce: useRef(null),
-    all: useRef(null),
+  const sectionsRef: sectionsRefType = {
+    bun: useRef<HTMLElement | null>(null),
+    main: useRef<HTMLElement | null>(null),
+    sauce: useRef<HTMLElement | null>(null),
   };
 
-  const onTabClick = (value) => {
+  const container = useRef<HTMLDivElement | null>(null);
+
+  const onTabClick = (value: string) => {
     let sectionRef = null
     switch (value) {
       case 'main': {
@@ -41,15 +54,15 @@ const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModa
   };
 
   const handleScroll = () => {
-    const scrollContainer = sectionsRef.all.current;
+    const scrollContainer = container.current;
     if (!scrollContainer) return;
 
     const scrollPosition = scrollContainer.scrollTop;
 
     const { bun, sauce, main } = sectionsRef;
-    const bunY = bun.current.offsetTop || 0;
-    const sauceY = sauce.current.offsetTop || 0;
-    const mainY = main.current.offsetTop || 0;
+    const bunY = bun.current ? bun.current.offsetTop : 0 || 0;
+    const sauceY = sauce.current ? sauce.current.offsetTop : 0 || 0;
+    const mainY = main.current ? main.current.offsetTop : 0 || 0;
 
     const visibleAreaTop = scrollPosition;
     const visibleAreaBottom = scrollPosition + scrollContainer.offsetHeight;
@@ -68,18 +81,20 @@ const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModa
   };
 
   useEffect(() => {
-    const scrollContainer = sectionsRef.all.current;
-    scrollContainer.addEventListener('scroll', handleScroll);
-    return () => {
-      scrollContainer.removeEventListener('scroll', handleScroll);
-    };
+    const scrollContainer = container.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+      return () => {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      };
+    }
   }, []);
 
   return (
     <>
       <div className="col flex flex-col gap-10">
         <ul className="flex">
-          {ingredients.map((item) => {
+          {ingredients.map((item: category) => {
             return (
               <li key={item.russianCategory}>
                 <Tab value={item.category} active={current === item.category} onClick={() => onTabClick(item.category)}>
@@ -90,8 +105,10 @@ const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModa
           })}
         </ul>
 
-        <div className={`${styles.scrollbar} custom-scroll  flex flex-col gap-10`} ref={sectionsRef.all}>
+        <div className={`${styles.scrollbar} custom-scroll  flex flex-col gap-10`} ref={container}>
           {ingredients.map((item, i) => {
+
+
             return (
               <section key={item.category} ref={sectionsRef[item.category]}>
                 <h2 className="text text_type_main-medium mb-6">

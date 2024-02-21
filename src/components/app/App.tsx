@@ -14,12 +14,14 @@ import Profile from '../../pages/Profile/Profile';
 import Register from '../../pages/Register';
 import Login from '../../pages/Login';
 
+import { context, ingredient, user } from '../../types/Types';
+
 import ProtectedRoute from '../protectedRoute/ProtectedRoute';
 
 import ingredientsService from '../../service/ingredientsService';
 import { userService } from '../../service/userService'
 
-function reducer(state, action) {
+function reducer(state: context, action: any) {
   switch (action.type) {
     case 'USER': {
       return {
@@ -49,14 +51,15 @@ function reducer(state, action) {
         price: state.price - prevBunPrice + action.payload.price
       }
     }
-
     case 'MAKE_ORDER': {
       return {
         ...state,
         orderNum: action.payload
       }
     }
-      throw Error('Unknown action: ' + action.type);
+    default: {
+      throw new Error('Unknown action');
+    }
   }
 }
 
@@ -64,9 +67,9 @@ function App() {
   const getData = new ingredientsService();
   const user = new userService()
 
-  const [order, dispatch] = useReducer(reducer, { user: null, bun: null, ingredients: [], price: 0 });
+  const [order, dispatch] = useReducer<React.Reducer<context, any>>(reducer, { user: null, bun: null, ingredients: [], price: 0, orderNum: null });
 
-  const addIngredient = useCallback((elem) => {
+  const addIngredient = useCallback((elem: ingredient) => {
     if (elem.type === 'bun') {
       dispatch({ type: 'BUN_CHANGE', payload: elem })
     } else {
@@ -75,19 +78,19 @@ function App() {
 
   }, [order])
 
-  const removeIngredient = (elem, i) => {
-    const filteredIngredients = order.ingredients.filter((elem, index) => index !== i);
+  const removeIngredient = (elem: ingredient, i: number) => {
+    const filteredIngredients = order.ingredients.filter((elem: ingredient, index: number) => index !== i);
     dispatch({ type: 'REMOVE', removedIng: elem, ingredients: filteredIngredients })
   }
 
   const makeOrder = async () => {
-    const data = [...order.ingredients.map(elem => elem._id), order.bun._id]
+    const data = order.bun ? [...order.ingredients.map((elem: ingredient) => elem._id), order.bun._id] : [...order.ingredients.map((elem: ingredient) => elem._id)]
     getData.postOrder(data).then(res => {
       dispatch({ type: 'MAKE_ORDER', payload: res.order.number })
     }).catch(console.error);
   }
 
-  const setUser = (user) => {
+  const setUser = (user: user | null) => {
     dispatch({ type: 'USER', payload: user })
   }
 

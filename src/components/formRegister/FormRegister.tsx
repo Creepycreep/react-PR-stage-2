@@ -1,4 +1,5 @@
 import styles from './FormRegister.module.css'
+import { user } from '../../types/Types';
 
 import { useNavigate } from "react-router-dom";
 
@@ -6,13 +7,13 @@ import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-de
 import { userService } from '../../service/userService'
 import { useForm } from '../../hooks/useForm'
 
-const FormRegister = ({ setUser }) => {
+const FormRegister = ({ setUser }: { setUser: (user: user | null) => void }) => {
   const [value, setValue, isFilled] = useForm({ name: '', email: '', password: '' })
   const navigate = useNavigate()
 
   const registration = new userService()
 
-  const onSubmit = async e => {
+  const onSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     const user = await registration.userRegister(value)
 
@@ -28,8 +29,6 @@ const FormRegister = ({ setUser }) => {
         onChange={setValue}
         value={value.name}
         name={'name'}
-        error={false}
-        errorText={'Ошибка'}
         size={'default'}
       />
 
@@ -44,7 +43,6 @@ const FormRegister = ({ setUser }) => {
         onChange={setValue}
         value={value.password}
         name={'password'}
-        errorText={'Должно быть минимум 8 знаков'}
       />
 
       <Button

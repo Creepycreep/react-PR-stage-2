@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import styles from './ModalOverlay.module.css'
 
-const ModalOverlay = ({ onClose }) => {
-  const onKeyDown = (e) => {
+const ModalOverlay = ({ onClose }: { onClose: () => void }) => {
+  const onKeyDown = (e: { keyCode: number }) => {
     if (e.keyCode === 27) {
       onClose()
     }

@@ -1,4 +1,5 @@
 import styles from './FormLogin.module.css'
+import { user } from '../../types/Types';
 
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState } from 'react'
@@ -7,14 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { userService } from '../../service/userService'
 import { useForm } from '../../hooks/useForm'
 
-const FormLogin = ({ setUser }) => {
+const FormLogin = ({ setUser }: { setUser: (user: user | null) => void }) => {
   const [value, setValue, isFilled] = useForm({ email: '', password: '' })
   const [error, setError] = useState(false)
   const navigate = useNavigate()
 
   const login = new userService()
 
-  const onSubmit = async e => {
+  const onSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     login.userLogin(value, setError).then(res => {
       if (!res) {
