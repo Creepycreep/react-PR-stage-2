@@ -1,8 +1,4 @@
-import './App.css';
-import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
-import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
-
-import { useCallback, useReducer, useEffect, useState } from 'react';
+import React, { useCallback, useReducer, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { BurgerContext } from '../../context/BurgerContext'
@@ -13,51 +9,87 @@ import ErrorPage from '../../pages/404';
 import Profile from '../../pages/Profile/Profile';
 import Register from '../../pages/Register';
 import Login from '../../pages/Login';
-
-import { context, ingredient, user } from '../../types/Types';
-
+import { Context, Ingredient, User } from '../../types/Types';
 import ProtectedRoute from '../protectedRoute/ProtectedRoute';
 
-import ingredientsService from '../../service/ingredientsService';
+import IngredientsService from '../../service/ingredientsService';
 import { userService } from '../../service/userService'
 
-function reducer(state: context, action: any) {
+import './App.css';
+import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
+import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
+
+enum ActionTypeEnum {
+  user = 'USER',
+  addIngredient = 'ADD',
+  remove = 'REMOVE',
+  bunChange = 'BUN_CHANGE',
+  makeOrder = 'MAKE_ORDER',
+  refreshOrder = 'REFRESH_ORDER',
+}
+
+interface ActionData<Type = ActionType, Payload = {}> {
+  type: Type;
+  payload: Payload;
+}
+
+type ActionType =
+  ActionData<ActionTypeEnum.user, { user: User | null }>
+  |
+  ActionData<ActionTypeEnum.addIngredient, { ingredient: Ingredient }>
+  |
+  ActionData<ActionTypeEnum.bunChange, {
+    ingredient: Ingredient;
+  }>
+  |
+  ActionData<ActionTypeEnum.remove, {
+    ingredients: Array<Ingredient>;
+    removedIng: Ingredient;
+  }>
+  |
+  ActionData<ActionTypeEnum.makeOrder, number>
+  |
+  ActionData<ActionTypeEnum.refreshOrder, {}>
+  ;
+
+function reducer(state: Context, action: ActionType): Context {
   switch (action.type) {
-    case 'USER': {
+    case ActionTypeEnum.user: {
       return {
         ...state,
-        user: action.payload
+        user: action.payload.user
       }
     }
-    case 'ADD': {
+    case ActionTypeEnum.addIngredient: {
       return {
         ...state,
-        ingredients: [...state.ingredients, action.payload],
-        price: state.price + action.payload.price
+        ingredients: [...state.ingredients, action.payload.ingredient],
+        price: state.price + action.payload.ingredient.price,
       }
     }
-    case 'REMOVE': {
-      return {
-        ...state,
-        ingredients: action.ingredients,
-        price: state.price - action.removedIng.price
-      }
-    }
-    case 'BUN_CHANGE': {
+    case ActionTypeEnum.bunChange: {
       const prevBunPrice = state.bun ? state.bun.price : 0
       return {
         ...state,
-        bun: action.payload,
-        price: state.price - prevBunPrice + action.payload.price
+        bun: action.payload.ingredient,
+        price: state.price - prevBunPrice + action.payload.ingredient.price,
       }
     }
-    case 'MAKE_ORDER': {
+    case ActionTypeEnum.remove: {
+      return {
+        ...state,
+        ingredients: action.payload.ingredients,
+        price: state.price - action.payload.removedIng.price
+      }
+    }
+
+    case ActionTypeEnum.makeOrder: {
       return {
         ...state,
         orderNum: action.payload
       }
     }
-    case 'REFRESH_ORDER': {
+    case ActionTypeEnum.refreshOrder: {
       return {
         ...state,
         bun: null,
@@ -72,46 +104,48 @@ function reducer(state: context, action: any) {
 }
 
 function App() {
-  const getData = new ingredientsService();
   const user = new userService()
 
   const [isChecked, setIsChecked] = useState(false)
   const [isOrderLoading, setisOrderLoading] = useState(false)
 
-  const [order, dispatch] = useReducer<React.Reducer<context, any>>(reducer, { user: null, bun: null, ingredients: [], price: 0, orderNum: null });
+  const [order, dispatch] = useReducer<React.Reducer<Context, ActionType>>(reducer, { user: null, bun: null, ingredients: [], price: 0, orderNum: null });
 
-  const addIngredient = useCallback((elem: ingredient) => {
-    if (elem.type === 'bun') {
-      dispatch({ type: 'BUN_CHANGE', payload: elem })
+  const setUser = (user: User | null) => {
+    dispatch({ type: ActionTypeEnum.user, payload: { user: user } })
+  }
+
+  const addIngredient = useCallback((ingredient: Ingredient) => {
+    if (ingredient.type === 'bun') {
+      dispatch({ type: ActionTypeEnum.bunChange, payload: { ingredient: ingredient } })
     } else {
-      dispatch({ type: 'ADD', payload: elem })
+      dispatch({ type: ActionTypeEnum.addIngredient, payload: { ingredient: ingredient } })
     }
-
   }, [order])
 
-  const removeIngredient = (elem: ingredient, i: number) => {
-    const filteredIngredients = order.ingredients.filter((elem: ingredient, index: number) => index !== i);
-    dispatch({ type: 'REMOVE', removedIng: elem, ingredients: filteredIngredients })
+  const removeIngredient = (elem: Ingredient, i: number) => {
+    const filteredIngredients = order.ingredients.filter((elem: Ingredient, index: number) => index !== i);
+    dispatch({
+      type: ActionTypeEnum.remove,
+      payload: { removedIng: elem, ingredients: filteredIngredients }
+    })
   }
 
   const makeOrder = async () => {
-    const data = order.bun ? [...order.ingredients.map((elem: ingredient) => elem._id), order.bun._id] : [...order.ingredients.map((elem: ingredient) => elem._id)]
+    const data = order.bun ? [...order.ingredients.map((elem: Ingredient) => elem._id), order.bun._id] : [...order.ingredients.map((elem: Ingredient) => elem._id)]
     setisOrderLoading(true)
 
-    getData.postOrder(data).then(res => {
-      dispatch({ type: 'MAKE_ORDER', payload: res.order.number })
+    IngredientsService.postOrder(data).then(res => {
+      dispatch({ type: ActionTypeEnum.makeOrder, payload: res.order.number })
       setisOrderLoading(false)
     }).then(res => {
-      dispatch({ type: 'REFRESH_ORDER' })
+      dispatch({ type: ActionTypeEnum.refreshOrder, payload: {} })
     }).catch(console.error);
   }
 
-  const setUser = (user: user | null) => {
-    dispatch({ type: 'USER', payload: user })
-  }
-
   useEffect(() => {
-    user.checkUserAuth(setUser, setIsChecked)
+    // @TODO двойной вызов
+    user.checkUserAuth(setUser, setIsChecked);
   }, [])
 
   return (

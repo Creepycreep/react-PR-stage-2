@@ -1,8 +1,8 @@
-import { ingredient } from '../../types/Types'
+import { Ingredient } from '../../types/Types'
 
 import styles from './IngredientDetails.module.css'
 
-const IngredientDetails = ({ ingredient }: { ingredient: ingredient | null }) => {
+const IngredientDetails = ({ ingredient }: { ingredient: Ingredient | null }) => {
   return (
     <div className={styles.card}>
       <div className={styles.img}>

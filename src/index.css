@@ -118,3 +118,8 @@ ul {
 button {
   cursor: pointer;
 }
+
+
+.bottom-bun img {
+  transform: rotate(180deg);
+}

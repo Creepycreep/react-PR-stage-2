@@ -1,5 +1,5 @@
 import styles from './FormRegister.module.css'
-import { user } from '../../types/Types';
+import { User } from '../../types/Types';
 
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +7,7 @@ import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-de
 import { userService } from '../../service/userService'
 import { useForm } from '../../hooks/useForm'
 
-const FormRegister = ({ setUser }: { setUser: (user: user | null) => void }) => {
+const FormRegister = ({ setUser }: { setUser: (user: User | null) => void }) => {
   const [value, setValue, isFilled] = useForm({ name: '', email: '', password: '' })
   const navigate = useNavigate()
 

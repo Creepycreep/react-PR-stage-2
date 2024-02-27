@@ -1,30 +1,30 @@
 import styles from './BurgerIngredients.module.css'
 import { useState, memo, useEffect, useRef } from "react"
-import { ingredient, category } from '../../types/Types';
+import { Ingredient, Category } from '../../types/Types';
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
-import Ingredient from '../inrgredient/Ingredient'
+import BurgerIngredient from '../inrgredient/Ingredient'
 
-type PropsType = {
-  ingredients: Array<category>,
+type BurgerIngredientsType = {
+  ingredients: Array<Category>,
   setModalVisibility: React.Dispatch<React.SetStateAction<boolean>>,
-  handleIngredient: (elem: ingredient) => void,
-  onChoose: (elem: ingredient) => void
+  handleIngredient: (elem: Ingredient) => void,
+  onChoose: (elem: Ingredient) => void
 }
 
-type sectionsRefType = {
+type SectionsRefType = {
   [key: string]: React.MutableRefObject<HTMLElement | null>
 }
 
-const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModalVisibility, handleIngredient, onChoose }: PropsType) {
+const BurgerIngredients = ({ ingredients, setModalVisibility, handleIngredient, onChoose }: BurgerIngredientsType) => {
   const [current, setCurrent] = useState('bun');
 
-  const onIngredientClick = (elem: ingredient) => {
+  const onIngredientClick = (elem: Ingredient) => {
     handleIngredient(elem)
     setModalVisibility(true)
   }
 
-  const sectionsRef: sectionsRefType = {
+  const sectionsRef: SectionsRefType = {
     bun: useRef<HTMLElement | null>(null),
     main: useRef<HTMLElement | null>(null),
     sauce: useRef<HTMLElement | null>(null),
@@ -94,7 +94,7 @@ const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModa
     <>
       <div className="col flex flex-col gap-10">
         <ul className="flex">
-          {ingredients.map((item: category) => {
+          {ingredients.map((item: Category) => {
             return (
               <li key={item.russianCategory}>
                 <Tab value={item.category} active={current === item.category} onClick={() => onTabClick(item.category)}>
@@ -116,10 +116,10 @@ const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModa
                 </h2>
 
                 <ul className={`${styles.grid} pl-4 pr-4`}>
-                  {item.items.map(elem => {
+                  {item.items.map((elem: Ingredient) => {
                     return (
                       <li key={elem._id}>
-                        <Ingredient
+                        <BurgerIngredient
                           elem={elem}
                           onIngredientClick={onIngredientClick}
                           onChoose={onChoose}
@@ -135,6 +135,6 @@ const BurgerIngredients = memo(function BurgerIngredients({ ingredients, setModa
       </div>
     </>
   )
-})
+}
 
-export default BurgerIngredients
+export default memo(BurgerIngredients);

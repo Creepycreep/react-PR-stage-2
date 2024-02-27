@@ -2,7 +2,7 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useState, useCallback, useContext, useEffect } from 'react';
 
-import { ingredient, category } from '../types/Types';
+import { Ingredient, Category } from '../types/Types';
 
 import BurgerIngredients from '../components/burgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../components/burgerConstructor/BurgerConstructor';
@@ -13,23 +13,22 @@ import OrderDetails from '../components/orderDetails/OrderDetails';
 import Modal from '../components/modal/Modal'
 
 import { BurgerContext } from '../context/BurgerContext'
-import ingredientsService from '../service/ingredientsService';
+import IngredientsService from "../service/ingredientsService";
 
 type Props = {
-  addIngredient: (elem: ingredient) => void
+  addIngredient: (elem: Ingredient) => void
   makeOrder: () => Promise<void>,
-  removeIngredient: (elem: ingredient, i: number) => void,
+  removeIngredient: (elem: Ingredient, i: number) => void,
   isOrderLoading: boolean
 }
 const MainPage = ({ isOrderLoading, addIngredient, removeIngredient, makeOrder }: Props) => {
   const order = useContext(BurgerContext)
-  const getData = new ingredientsService();
 
-  const [detailIngredient, setDetailIngredient] = useState<ingredient | null>(null)
-  const [ingredients, setIngredients] = useState<Array<category>>([])
+  const [detailIngredient, setDetailIngredient] = useState<Ingredient | null>(null)
+  const [ingredients, setIngredients] = useState<Array<Category>>([])
 
   const handleIngredient = useCallback(
-    (elem: ingredient) => {
+    (elem: Ingredient) => {
       setDetailIngredient(elem)
     }, [])
 
@@ -37,8 +36,9 @@ const MainPage = ({ isOrderLoading, addIngredient, removeIngredient, makeOrder }
   const [isModalOrderVisible, setIsModalOrderVisible] = useState(false);
 
   useEffect(() => {
+    // @TODO двойной вызов
     const fetchData = async () => {
-      const data = await getData.getIngredients();
+      const data = await IngredientsService.getIngredients();
       setIngredients(data);
     }
     fetchData();

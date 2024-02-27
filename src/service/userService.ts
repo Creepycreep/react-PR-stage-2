@@ -1,5 +1,5 @@
 import { API } from '../utils/apiConsts';
-import { user } from '../types/Types';
+import { User } from '../types/Types';
 
 export class userService {
 
@@ -20,14 +20,14 @@ export class userService {
     return result
   }
 
-  userLogin = async (data: { email: string, password: string }, setError: React.Dispatch<React.SetStateAction<boolean>>) => {
-    const result = await fetch(API._login, {
+  userLogin = (data: { email: string, password: string }, setError: React.Dispatch<React.SetStateAction<boolean>>) => {
+    return fetch(API._login, {
       method: 'POST', headers: {
         'Content-Type': 'application/json;charset=utf-8'
       }, body: JSON.stringify(data)
     }).then(res => {
       if (!res || !res.ok) {
-        throw new Error('Error!')
+        throw new Error('Произошла ошибка авторизации API');
       }
       return res.json()
     }).then(res => {
@@ -36,8 +36,9 @@ export class userService {
       localStorage.setItem('accessToken', res.accessToken);
 
       return res
-    }).catch(console.error)
-    return result
+    }).catch((err) => {
+      console.error(err);
+    });
   }
 
   userLogout = async () => {
@@ -111,7 +112,7 @@ export class userService {
     return result
   }
 
-  checkUserAuth = (setUser: (user: user | null) => void, setIsChecked: React.Dispatch<React.SetStateAction<boolean>>) => {
+  checkUserAuth = (setUser: (user: User | null) => void, setIsChecked: React.Dispatch<React.SetStateAction<boolean>>) => {
     if (localStorage.getItem("accessToken") && localStorage.getItem('accessToken')) {
       this.getUser().then(res => {
         setUser(res.user)

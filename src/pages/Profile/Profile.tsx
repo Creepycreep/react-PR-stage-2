@@ -1,12 +1,12 @@
 import styles from './Profile.module.css'
 import { useNavigate } from "react-router-dom";
-import { user } from '../../types/Types';
+import { User } from '../../types/Types';
 
 import { Link } from 'react-router-dom';
 import FormProfile from '../../components/formProfile/FormProfile';
 
 import { userService } from '../../service/userService'
-const Profile = ({ setUser }: { setUser: (user: user | null) => void }) => {
+const Profile = ({ setUser }: { setUser: (user: User | null) => void }) => {
   const logout = new userService()
   const navigate = useNavigate()
 

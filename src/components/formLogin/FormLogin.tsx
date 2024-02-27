@@ -1,5 +1,5 @@
 import styles from './FormLogin.module.css'
-import { user } from '../../types/Types';
+import { User } from '../../types/Types';
 
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState } from 'react'
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { userService } from '../../service/userService'
 import { useForm } from '../../hooks/useForm'
 
-const FormLogin = ({ setUser }: { setUser: (user: user | null) => void }) => {
+const FormLogin = ({ setUser }: { setUser: (user: User | null) => void }) => {
   const [value, setValue, isFilled] = useForm({ email: '', password: '' })
   const [error, setError] = useState(false)
   const navigate = useNavigate()
@@ -23,6 +23,8 @@ const FormLogin = ({ setUser }: { setUser: (user: user | null) => void }) => {
       }
       setUser(res.user)
       navigate('/')
+    }).catch(() => {
+      setError(true);
     })
   }
 

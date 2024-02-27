@@ -1,11 +1,11 @@
-export interface context {
-  user: user | null,
-  bun: ingredient | null,
-  ingredients: Array<ingredient>,
+export interface Context {
+  user: User | null,
+  bun: Ingredient | null,
+  ingredients: Array<Ingredient>,
   price: number,
   orderNum: number | null
 }
-export interface ingredient {
+export interface Ingredient {
   "_id": string,
   "name": string,
   "type": string,
@@ -20,19 +20,19 @@ export interface ingredient {
   "__v": number
 }
 
-export interface category {
+export interface Category {
   category: string,
   russianCategory: string,
-  items: Array<ingredient>
+  items: Array<Ingredient>
 }
 
-export interface ingredientList {
+export interface IngredientList {
   category: string,
   russianCategory: string,
-  items: Array<ingredient>
+  items: Array<Ingredient>
 }
 
-export interface user {
-  name: 'string',
-  email: 'string'
+export interface User {
+  name: string,
+  email: string
 }

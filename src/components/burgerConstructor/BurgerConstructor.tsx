@@ -1,21 +1,19 @@
-import styles from './BurgerConstructor.module.css'
-
-import { ingredient } from '../../types/Types';
+import { Ingredient } from '../../types/Types';
 
 import { useDrop } from 'react-dnd'
 import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useContext } from 'react';
 import { useNavigate } from "react-router-dom";
-
 import { BurgerContext } from '../../context/BurgerContext'
+import styles from './BurgerConstructor.module.css'
 
-type PropsType = {
+type BurgerConstructorType = {
   makeOrder: () => Promise<void>,
-  removeIngredient: (elem: ingredient, i: number) => void,
+  removeIngredient: (elem: Ingredient, i: number) => void,
   isOrderLoading: boolean
 }
 
-const BurgerConstructor = ({ makeOrder, removeIngredient, isOrderLoading }: PropsType) => {
+const BurgerConstructor = ({ makeOrder, removeIngredient, isOrderLoading }: BurgerConstructorType) => {
   const order = useContext(BurgerContext)
   const navigate = useNavigate()
 
@@ -65,14 +63,14 @@ const BurgerConstructor = ({ makeOrder, removeIngredient, isOrderLoading }: Prop
           </ul>
           : null}
 
-        {order?.bun ?
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${order.bun.name} (низ)`}
-            price={order.bun.price}
-            thumbnail={order.bun.image}
-          />
+        {order?.bun ? <ConstructorElement
+          type="bottom"
+          extraClass={'bottom-bun'}
+          isLocked={true}
+          text={`${order.bun.name} (низ)`}
+          price={order.bun.price}
+          thumbnail={order.bun.image}
+        />
           : null}
       </section>
 

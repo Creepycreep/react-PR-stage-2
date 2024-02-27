@@ -1,4 +1,4 @@
-import { context } from "../types/Types";
+import { Context } from "../types/Types";
 import { createContext } from "react";
 
-export const BurgerContext = createContext<context | null>(null);
+export const BurgerContext = createContext<Context | null>(null);
