@@ -19,14 +19,17 @@ import './App.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
 
-enum ActionTypeEnum {
-  user = 'USER',
-  addIngredient = 'ADD',
-  remove = 'REMOVE',
-  bunChange = 'BUN_CHANGE',
-  makeOrder = 'MAKE_ORDER',
-  refreshOrder = 'REFRESH_ORDER',
-}
+
+const actionType = {
+  user: 'USER',
+  addIngredient: 'ADD',
+  remove: 'REMOVE',
+  bunChange: 'BUN_CHANGE',
+  makeOrder: 'MAKE_ORDER',
+  refreshOrder: 'REFRESH_ORDER',
+} as const;
+
+
 
 interface ActionData<Type = ActionType, Payload = {}> {
   type: Type;
@@ -34,40 +37,40 @@ interface ActionData<Type = ActionType, Payload = {}> {
 }
 
 type ActionType =
-  ActionData<ActionTypeEnum.user, { user: User | null }>
+  ActionData<typeof actionType.user, { user: User | null }>
   |
-  ActionData<ActionTypeEnum.addIngredient, { ingredient: Ingredient }>
+  ActionData<typeof actionType.addIngredient, { ingredient: Ingredient }>
   |
-  ActionData<ActionTypeEnum.bunChange, {
+  ActionData<typeof actionType.bunChange, {
     ingredient: Ingredient;
   }>
   |
-  ActionData<ActionTypeEnum.remove, {
+  ActionData<typeof actionType.remove, {
     ingredients: Array<Ingredient>;
     removedIng: Ingredient;
   }>
   |
-  ActionData<ActionTypeEnum.makeOrder, number>
+  ActionData<typeof actionType.makeOrder, number>
   |
-  ActionData<ActionTypeEnum.refreshOrder, {}>
+  ActionData<typeof actionType.refreshOrder, {}>
   ;
 
 function reducer(state: Context, action: ActionType): Context {
   switch (action.type) {
-    case ActionTypeEnum.user: {
+    case actionType.user: {
       return {
         ...state,
         user: action.payload.user
       }
     }
-    case ActionTypeEnum.addIngredient: {
+    case actionType.addIngredient: {
       return {
         ...state,
         ingredients: [...state.ingredients, action.payload.ingredient],
         price: state.price + action.payload.ingredient.price,
       }
     }
-    case ActionTypeEnum.bunChange: {
+    case actionType.bunChange: {
       const prevBunPrice = state.bun ? state.bun.price : 0
       return {
         ...state,
@@ -75,7 +78,7 @@ function reducer(state: Context, action: ActionType): Context {
         price: state.price - prevBunPrice + action.payload.ingredient.price,
       }
     }
-    case ActionTypeEnum.remove: {
+    case actionType.remove: {
       return {
         ...state,
         ingredients: action.payload.ingredients,
@@ -83,13 +86,13 @@ function reducer(state: Context, action: ActionType): Context {
       }
     }
 
-    case ActionTypeEnum.makeOrder: {
+    case actionType.makeOrder: {
       return {
         ...state,
         orderNum: action.payload
       }
     }
-    case ActionTypeEnum.refreshOrder: {
+    case actionType.refreshOrder: {
       return {
         ...state,
         bun: null,
@@ -112,21 +115,21 @@ function App() {
   const [order, dispatch] = useReducer<React.Reducer<Context, ActionType>>(reducer, { user: null, bun: null, ingredients: [], price: 0, orderNum: null });
 
   const setUser = (user: User | null) => {
-    dispatch({ type: ActionTypeEnum.user, payload: { user: user } })
+    dispatch({ type: actionType.user, payload: { user: user } })
   }
 
   const addIngredient = useCallback((ingredient: Ingredient) => {
     if (ingredient.type === 'bun') {
-      dispatch({ type: ActionTypeEnum.bunChange, payload: { ingredient: ingredient } })
+      dispatch({ type: actionType.bunChange, payload: { ingredient: ingredient } })
     } else {
-      dispatch({ type: ActionTypeEnum.addIngredient, payload: { ingredient: ingredient } })
+      dispatch({ type: actionType.addIngredient, payload: { ingredient: ingredient } })
     }
   }, [order])
 
   const removeIngredient = (elem: Ingredient, i: number) => {
     const filteredIngredients = order.ingredients.filter((elem: Ingredient, index: number) => index !== i);
     dispatch({
-      type: ActionTypeEnum.remove,
+      type: actionType.remove,
       payload: { removedIng: elem, ingredients: filteredIngredients }
     })
   }
@@ -136,10 +139,10 @@ function App() {
     setisOrderLoading(true)
 
     IngredientsService.postOrder(data).then(res => {
-      dispatch({ type: ActionTypeEnum.makeOrder, payload: res.order.number })
+      dispatch({ type: actionType.makeOrder, payload: res.order.number })
       setisOrderLoading(false)
     }).then(res => {
-      dispatch({ type: ActionTypeEnum.refreshOrder, payload: {} })
+      dispatch({ type: actionType.refreshOrder, payload: {} })
     }).catch(console.error);
   }
 
