@@ -22,5 +22,5 @@ export const useForm = (initial: any) => {
 
   }, [value])
 
-  return [value, onChange, isFilled]
+  return { value, onChange, isFilled }
 }

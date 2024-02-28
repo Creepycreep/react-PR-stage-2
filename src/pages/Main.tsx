@@ -32,6 +32,10 @@ const MainPage = ({ isOrderLoading, addIngredient, removeIngredient, makeOrder }
       setDetailIngredient(elem)
     }, [])
 
+  // const handleIngredient = (elem: Ingredient) => {
+  //   setDetailIngredient(elem)
+  // }
+
   const [isModalIngredientVisible, setIsModalIngredientVisible] = useState(false);
   const [isModalOrderVisible, setIsModalOrderVisible] = useState(false);
 
@@ -71,20 +75,18 @@ const MainPage = ({ isOrderLoading, addIngredient, removeIngredient, makeOrder }
         </div>
       </DndProvider>
 
-      {isModalIngredientVisible ?
+      {isModalIngredientVisible &&
         <Modal title='Детали ингредиента'
           setVisibility={setIsModalIngredientVisible}
         >
           <IngredientDetails ingredient={detailIngredient} />
-        </Modal>
-        : null}
+        </Modal>}
 
-      {isModalOrderVisible ?
+      {isModalOrderVisible &&
         <Modal setVisibility={setIsModalOrderVisible}
         >
           {<OrderDetails num={order ? order.orderNum : 0} />}
-        </Modal>
-        : null}
+        </Modal>}
     </>
   )
 }

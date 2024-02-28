@@ -7,7 +7,7 @@ import { useForm } from '../../hooks/useForm'
 
 const FormProfile = () => {
   const context = useContext(BurgerContext)
-  const [value, setValue] = useForm({ email: '', password: '' })
+  const { value, onChange } = useForm({ email: '', password: '' })
 
   return (
     <form className={`${styles.form} flex flex-col gap-6 mb-10`
@@ -21,7 +21,7 @@ const FormProfile = () => {
         errorText={'Ошибка'}
         size={'default'}
         disabled
-        onChange={setValue}
+        onChange={onChange}
       />
 
       <EmailInput
@@ -30,7 +30,7 @@ const FormProfile = () => {
         placeholder="Логин"
         readOnly
         disabled
-        onChange={setValue}
+        onChange={onChange}
       />
     </form>
   )

@@ -36,17 +36,16 @@ const BurgerConstructor = ({ makeOrder, removeIngredient, isOrderLoading }: Burg
   return (
     <div className={'col custom-scroll flex flex-col'}>
       <section ref={drop} className={`${canDrop ? styles['can-drop'] : ''} ${styles.col} gap-5 flex flex-col`}>
-        {order?.bun ?
+        {order?.bun &&
           <ConstructorElement
             type="top"
             isLocked={true}
             text={`${order.bun.name} (верх)`}
             price={order.bun.price}
             thumbnail={order.bun.image}
-          />
-          : null}
+          />}
 
-        {order?.ingredients.length ?
+        {order?.ingredients.length &&
           <ul className={styles.list + ' custom-scroll col gap-5 flex flex-col'}>
             {order.ingredients.map((element, i) => {
               return (
@@ -60,18 +59,16 @@ const BurgerConstructor = ({ makeOrder, removeIngredient, isOrderLoading }: Burg
                 </li>
               )
             })}
-          </ul>
-          : null}
+          </ul>}
 
-        {order?.bun ? <ConstructorElement
+        {order?.bun && <ConstructorElement
           type="bottom"
           extraClass={'bottom-bun'}
           isLocked={true}
           text={`${order.bun.name} (низ)`}
           price={order.bun.price}
           thumbnail={order.bun.image}
-        />
-          : null}
+        />}
       </section>
 
 

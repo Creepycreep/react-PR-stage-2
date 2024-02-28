@@ -8,7 +8,7 @@ import { userService } from '../../service/userService'
 import { useForm } from '../../hooks/useForm'
 
 const FormRegister = ({ setUser }: { setUser: (user: User | null) => void }) => {
-  const [value, setValue, isFilled] = useForm({ name: '', email: '', password: '' })
+  const { value, onChange, isFilled } = useForm({ name: '', email: '', password: '' })
   const navigate = useNavigate()
 
   const registration = new userService()
@@ -26,21 +26,21 @@ const FormRegister = ({ setUser }: { setUser: (user: User | null) => void }) => 
       <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={setValue}
+        onChange={onChange}
         value={value.name}
         name={'name'}
         size={'default'}
       />
 
       <EmailInput
-        onChange={setValue}
+        onChange={onChange}
         value={value.email}
         name={'email'}
         placeholder="E-mail"
       />
 
       <PasswordInput
-        onChange={setValue}
+        onChange={onChange}
         value={value.password}
         name={'password'}
       />

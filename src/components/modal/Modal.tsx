@@ -14,7 +14,7 @@ const Modal = ({ children, setVisibility, title = '', isOverlay = true }: { chil
         <>
           <div className={`${styles.modal} p-10 pb-15`} >
             <div className={styles.modalHeader}>
-              {title.length ? <h2 className="text text_type_main-large">{title}</h2> : null}
+              {title.length && <h2 className="text text_type_main-large">{title}</h2>}
 
               <button onClick={() => setVisibility(false)} aria-label="Close">
                 <CloseIcon type="primary" />
@@ -26,7 +26,7 @@ const Modal = ({ children, setVisibility, title = '', isOverlay = true }: { chil
             </div>
           </div>
 
-          {isOverlay ? <ModalOverlay onClose={() => setVisibility(false)} /> : null}
+          {isOverlay && <ModalOverlay onClose={() => setVisibility(false)} />}
         </>
 
         , portal)
