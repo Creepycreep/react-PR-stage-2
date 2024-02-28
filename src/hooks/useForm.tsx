@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export const useForm = (initial: any) => {
+export const useForm = <T extends Record<string, string>>(initial: T) => {
   const [value, setValue] = useState(initial)
   const [isFilled, setIsFilled] = useState(false)
 
