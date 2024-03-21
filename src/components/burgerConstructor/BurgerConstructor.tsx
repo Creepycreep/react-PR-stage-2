@@ -45,9 +45,9 @@ const BurgerConstructor = ({ makeOrder, removeIngredient, isOrderLoading }: Burg
             thumbnail={order.bun.image}
           />}
 
-        {order?.ingredients.length &&
+        {Boolean(order?.ingredients.length) &&
           <ul className={styles.list + ' custom-scroll col gap-5 flex flex-col'}>
-            {order.ingredients.map((element, i) => {
+            {order?.ingredients.map((element, i) => {
               return (
                 <li key={element._id + i}>
                   <ConstructorElement
