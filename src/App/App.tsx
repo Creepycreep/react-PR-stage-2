@@ -1,19 +1,19 @@
 import React, { useCallback, useReducer, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import { BurgerContext } from '../../context/BurgerContext'
-import Header from '../header/Header';
+import { BurgerContext } from '../context/BurgerContext'
+import Header from '../components/header/Header';
 
-import MainPage from '../../pages/Main';
-import ErrorPage from '../../pages/404';
-import Profile from '../../pages/Profile/Profile';
-import Register from '../../pages/Register';
-import Login from '../../pages/Login';
-import { Context, Ingredient, User } from '../../types/Types';
-import ProtectedRoute from '../protectedRoute/ProtectedRoute';
+import MainPage from '../pages/Main';
+import ErrorPage from '../pages/404';
+import Profile from '../pages/Profile/Profile';
+import Register from '../pages/Register';
+import Login from '../pages/Login';
+import { Context, Ingredient, User } from '../types/Types';
+import ProtectedRoute from '../components/protectedRoute/ProtectedRoute';
 
-import IngredientsService from '../../service/ingredientsService';
-import { userService } from '../../service/userService'
+import IngredientsService from '../service/ingredientsService';
+import { userService } from '../service/userService'
 
 import './App.css';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
