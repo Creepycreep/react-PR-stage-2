@@ -152,7 +152,7 @@ function App() {
   }, [])
 
   return (
-    <Router basename="/react-PR-stage-2">
+    <Router>
       <BurgerContext.Provider value={order}>
         <Header />
         <main>
